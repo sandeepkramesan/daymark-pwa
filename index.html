@@ -25,6 +25,7 @@ button.primary{background:var(--accent);color:#161a10;border:0;border-radius:13p
 .heatwrap{margin-top:17px;padding-top:13px;border-top:1px solid var(--line)}.heat{display:grid;grid-template-columns:repeat(13,1fr);grid-template-rows:repeat(29,7px);grid-auto-flow:column;gap:3px;margin-top:9px}.heatcell{background:var(--panel2);border-radius:2px}.heatcell.active{background:var(--accent)}.heatlabel{font-size:11px;color:var(--muted)}.reminder{display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:var(--muted);font-size:12px}.reminder strong{color:var(--text)}.day.pop{animation:pop .35s ease}@keyframes pop{50%{transform:scale(1.18)}}
 .note{font-size:11px;color:var(--muted);margin-top:12px}
 dialog{border:1px solid var(--line);border-radius:20px;background:var(--panel);color:var(--text);width:min(440px,calc(100% - 28px));padding:22px;box-shadow:0 20px 80px #0009}dialog::backdrop{background:#000a}dialog h2{margin:0 0 16px;font-size:22px}.field{display:grid;gap:6px;margin:13px 0}.field label{font-size:12px;color:var(--muted)}.field input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:12px;color:var(--text)}.formactions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.danger{color:var(--red)!important}
+.restart-copy{color:var(--muted);font-size:13px;line-height:1.5}.restart-highlight{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0}.restart-highlight b{color:var(--accent)}
 footer{text-align:center;color:#777e8a;font-size:11px;padding:24px 0 10px}
 @media(min-width:620px){.app{padding-left:26px;padding-right:26px}.task{padding:21px}.day{border-radius:12px;font-size:13px}}
 </style>
@@ -45,6 +46,17 @@ footer{text-align:center;color:#777e8a;font-size:11px;padding:24px 0 10px}
 <div class="field"><label for="taskReminder">Daily reminder (optional)</label><input id="taskReminder" type="time"><small style="color:var(--muted)">Best-effort notifications while the app is open.</small></div><div class="formactions"><button type="button" class="ghost" id="cancelBtn">Cancel</button><button class="primary" type="submit">Save task</button></div>
 </form>
 </dialog>
+<dialog id="restartDialog">
+  <form id="restartForm">
+    <h2 id="restartTitle">Ready for a fresh streak?</h2>
+    <p class="restart-copy" id="restartMessage">Every streak is a fresh chance to show up. Set a new target and begin again.</p>
+    <div class="restart-highlight"><div id="restartTaskName" style="font-weight:750"></div><div id="restartReason" class="restart-copy"></div></div>
+    <input type="hidden" id="restartTaskId">
+    <div class="field"><label for="restartWeeks">New streak length (weeks)</label><input id="restartWeeks" type="number" min="1" max="52" value="4" required></div>
+    <div class="field"><label for="restartStart">Start date</label><input id="restartStart" type="date" required></div>
+    <div class="formactions"><button type="button" class="ghost" id="restartLater">Not now</button><button class="primary" type="submit">Start new streak</button></div>
+  </form>
+</dialog>
 <script>
 const $=s=>document.querySelector(s), todayISO=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};
 let tasks=JSON.parse(localStorage.getItem('daymark-tasks-v2')||localStorage.getItem('daymark-tasks')||'[]'), editing=null, monthOffsets={}, popDate=null; const savedTheme=localStorage.getItem('daymark-theme')||'dark';document.documentElement.dataset.theme=savedTheme;
@@ -56,6 +68,38 @@ function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt
 function streak(t){let n=0, cursor=todayISO();while(cursor>=t.start&&cursor<=addDays(t.start,t.days-1)&&t.done.includes(cursor)){n++;cursor=addDays(cursor,-1)}return n}
 function longest(t){let best=0,run=0,prev='';for(const d of [...new Set(t.done)].filter(x=>x>=t.start&&x<=addDays(t.start,t.days-1)).sort()){run=prev&&addDays(prev,1)===d?run+1:1;best=Math.max(best,run);prev=d}return best}
 function heatmap(t){const y=new Date().getFullYear();let cells='';for(let i=0;i<365+(new Date(y,1,29).getMonth()===1?1:0);i++){const d=iso(new Date(y,0,i+1));cells+=`<div class="heatcell ${t.done.includes(d)?'active':''}" title="${d}"></div>`}return `<div class="heatwrap"><div class="heatlabel"><b>${y} consistency heatmap</b> · ${t.done.filter(d=>d.startsWith(String(y))).length} completed days</div><div class="heat">${cells}</div></div>`}
+let activeRestartPrompt=null;
+function streakStatus(t){
+ const end=addDays(t.start,t.days-1), today=todayISO(), completed=t.done.filter(d=>d>=t.start&&d<=end).length;
+ if(completed>=t.days || today>end)return {kind:"ended",token:"ended-"+end,reason:completed>=t.days?"You reached your goal. Celebrate the win, then set your next target.":"Your challenge period has finished. Choose a fresh target and begin again."};
+ const yesterday=addDays(today,-1), priorDone=t.done.filter(d=>d>=t.start&&d<=yesterday).sort(), lastDone=priorDone[priorDone.length-1];
+ if(today>t.start && today<=end && lastDone && !t.done.includes(yesterday))
+   return {kind:"broken",token:"broken-"+lastDone,reason:"Yesterday was missed, so your consecutive streak has ended. You can begin again today."};
+ return null;
+}
+function maybePromptRestart(){
+ if(activeRestartPrompt || !$('#restartDialog') || $('#restartDialog').open)return;
+ for(const t of tasks){
+  const status=streakStatus(t); if(!status)continue;
+  if(t.restartPromptDismissed===status.token || t.restartPrompted===status.token)continue;
+  activeRestartPrompt={taskId:t.id,token:status.token};
+  $('#restartTaskId').value=t.id;
+  $('#restartTaskName').textContent=t.name;
+  $('#restartReason').textContent=status.reason;
+  $('#restartTitle').textContent=status.kind==='ended'?'You did it! Start a new streak?':'Your streak has ended. Ready to restart?';
+  $('#restartMessage').textContent=status.kind==='ended'?'You completed your target. Keep the momentum going with a fresh challenge.':'One missed day doesn’t erase your progress. Choose a new goal and start fresh.';
+  $('#restartWeeks').value=Math.max(1,Math.round(t.days/7));
+  $('#restartStart').value=todayISO();
+  $('#restartDialog').showModal();
+  break;
+ }
+}
+$('#restartLater').onclick=()=>{if(activeRestartPrompt){const t=tasks.find(x=>x.id===activeRestartPrompt.taskId);if(t){t.restartPromptDismissed=activeRestartPrompt.token;localStorage.setItem('daymark-tasks-v2',JSON.stringify(tasks));}}activeRestartPrompt=null;$('#restartDialog').close()};
+$('#restartForm').onsubmit=e=>{e.preventDefault();const old=tasks.find(x=>x.id===$('#restartTaskId').value),weeks=Number($('#restartWeeks').value),start=$('#restartStart').value;if(!old||!start||weeks<1||weeks>52)return;
+ const status=streakStatus(old);if(status)old.restartPrompted=status.token;
+ tasks.unshift({id:crypto.randomUUID(),name:old.name,days:weeks*7,start,reminder:old.reminder||'',done:[]});
+ activeRestartPrompt=null;$('#restartDialog').close();save();
+};
 function render(){
  const host=$('#taskList');
  if(!tasks.length){host.innerHTML='<div class="empty"><b>Your first streak starts here.</b>Create a task, choose your target, then tap each date when you complete it.</div>';return}
@@ -71,6 +115,7 @@ function render(){
   <div class="week"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div><div class="days">${cells}</div>
   <div class="legend"><span><i class="dot"></i>Completed</span><span><i class="dot pending"></i>Not completed</span></div>${heatmap(t)}<div class="reminder"><span>Daily reminder: <strong>${t.reminder||"Off"}</strong></span><button class="ghost" data-reminder="${t.id}">Set time</button></div><div class="note">Tap a date to mark it complete. Tap again to undo. Future dates are locked.</div></article>`
  }).join('');
+ maybePromptRestart();
 }
 function openDialog(t){editing=t?.id||null;$('#dialogTitle').textContent=t?'Edit task':'Create a task';$('#taskName').value=t?.name||'';$('#taskDays').value=t?.days||30;$('#taskStart').value=t?.start||todayISO();$('#taskReminder').value=t?.reminder||'';$('#taskDialog').showModal()}
 $('#addBtn').onclick=()=>openDialog();$('#cancelBtn').onclick=()=>$('#taskDialog').close();
