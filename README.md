@@ -10,10 +10,5 @@ A lightweight habit streak calendar. It supports multiple tasks, a target durati
 
 A PWA cannot be installed directly from a ZIP file; it needs to be served from HTTPS (or localhost during development).
 
-## Deploy with GitHub Pages
-1. Create a new GitHub repository and upload all files/folders in this directory (keep `manifest.webmanifest`, `sw.js`, and `icons/` at the root).
-2. In repository Settings → Pages, choose **Deploy from a branch**, select `main` and `/ (root)`, then Save.
-3. Wait for the Pages URL, open it on Android Chrome, and install.
-
 ## Privacy
 No account or server is used. Tasks and completion marks are stored in this browser's local storage. Clearing browser site data will erase them.
