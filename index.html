@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101114">
+<meta name="description" content="A simple calendar to build consistency, one day at a time.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Daymark — Keep your streak</title>
+<style>
+:root{color-scheme:dark;--bg:#101114;--panel:#191b20;--panel2:#20232a;--line:#30343d;--muted:#9da3af;--text:#f4f5f7;--accent:#c6f36a;--red:#ff7e7e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button,input{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;padding:env(safe-area-inset-top) 18px calc(28px + env(safe-area-inset-bottom))}
+header{display:flex;align-items:center;justify-content:space-between;padding:24px 0 18px} .brand{display:flex;gap:11px;align-items:center}.mark{width:38px;height:38px;border-radius:12px;background:var(--accent);color:#151711;display:grid;place-items:center;font-weight:900;font-size:20px}.brand strong{font-size:18px;letter-spacing:-.4px}.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+button.primary{background:var(--accent);color:#161a10;border:0;border-radius:13px;padding:12px 16px;font-weight:750}button.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:9px 12px}
+.intro{padding:20px 0 22px}.eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase}.intro h1{font-size:clamp(28px,6vw,42px);line-height:1.05;letter-spacing:-1.6px;margin:8px 0}.intro p{color:var(--muted);margin:8px 0 0}
+.tasklist{display:grid;gap:14px}.empty{border:1px dashed #454a54;border-radius:18px;padding:32px 22px;text-align:center;color:var(--muted)}.empty b{display:block;color:var(--text);font-size:18px;margin-bottom:5px}
+.task{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:17px;overflow:hidden}.tasktop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.taskname{font-size:19px;font-weight:750;letter-spacing:-.4px;overflow-wrap:anywhere}.taskmeta{font-size:12px;color:var(--muted);margin-top:4px}.taskactions{display:flex;gap:7px}.iconbtn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--muted)}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:16px 0}.stat{background:var(--panel2);border-radius:12px;padding:10px}.stat b{display:block;font-size:20px;letter-spacing:-.6px}.stat span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.progresshead{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:7px}.bar{height:7px;border-radius:9px;background:#343842;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent);border-radius:9px}
+.calhead{display:flex;justify-content:space-between;align-items:center;margin:19px 0 10px}.calhead strong{font-size:13px}.monthnav{display:flex;gap:6px}.monthnav button{width:30px;height:30px;padding:0}.week,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.week span{text-align:center;color:#858b97;font-size:10px;padding:4px 0}.day{aspect-ratio:1;border-radius:10px;background:#23262d;border:1px solid transparent;color:#dce0e7;display:grid;place-items:center;position:relative;font-size:12px;padding:0}.day.blank{background:transparent}.day.out{opacity:.28}.day.done{background:var(--accent);color:#17200d;font-weight:850}.day.today{border-color:var(--accent)}.day:disabled{cursor:default;opacity:.4}.legend{display:flex;gap:14px;color:var(--muted);font-size:11px;margin-top:12px}.dot{display:inline-block;width:8px;height:8px;border-radius:3px;margin-right:5px;background:var(--accent)}.dot.pending{background:#343842}
+.note{font-size:11px;color:var(--muted);margin-top:12px}
+dialog{border:1px solid var(--line);border-radius:20px;background:var(--panel);color:var(--text);width:min(440px,calc(100% - 28px));padding:22px;box-shadow:0 20px 80px #0009}dialog::backdrop{background:#000a}dialog h2{margin:0 0 16px;font-size:22px}.field{display:grid;gap:6px;margin:13px 0}.field label{font-size:12px;color:var(--muted)}.field input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:12px;color:var(--text)}.formactions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.danger{color:var(--red)!important}
+footer{text-align:center;color:#777e8a;font-size:11px;padding:24px 0 10px}
+@media(min-width:620px){.app{padding-left:26px;padding-right:26px}.task{padding:21px}.day{border-radius:12px;font-size:13px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand"><div class="mark">✓</div><div><strong>daymark</strong><small>show up daily</small></div></div><button class="primary" id="addBtn">＋ New task</button></header>
+<section class="intro"><div class="eyebrow">Small steps. Real progress.</div><h1>Make every day<br>count.</h1><p>Set a goal, mark each day you show up, and watch your streak grow.</p></section>
+<main id="taskList" class="tasklist"></main>
+<footer>Your progress is saved on this device.</footer>
+</div>
+<dialog id="taskDialog">
+<form id="taskForm">
+<h2 id="dialogTitle">Create a task</h2>
+<div class="field"><label for="taskName">What do you want to do?</label><input id="taskName" maxlength="70" placeholder="e.g. Read 20 pages" required></div>
+<div class="field"><label for="taskDays">How many days is your target?</label><input id="taskDays" type="number" min="1" max="366" value="30" required></div>
+<div class="field"><label for="taskStart">Start date</label><input id="taskStart" type="date" required></div>
+<div class="formactions"><button type="button" class="ghost" id="cancelBtn">Cancel</button><button class="primary" type="submit">Save task</button></div>
+</form>
+</dialog>
+<script>
+const $=s=>document.querySelector(s), todayISO=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};
+let tasks=JSON.parse(localStorage.getItem('daymark-tasks')||'[]'), editing=null, monthOffsets={};
+function save(){localStorage.setItem('daymark-tasks',JSON.stringify(tasks));render()}
+function dateObj(s){const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)}
+function iso(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function addDays(s,n){const d=dateObj(s);d.setDate(d.getDate()+n);return iso(d)}
+function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function streak(t){let n=0, cursor=todayISO();while(cursor>=t.start&&cursor<=addDays(t.start,t.days-1)&&t.done.includes(cursor)){n++;cursor=addDays(cursor,-1)}return n}
+function render(){
+ const host=$('#taskList');
+ if(!tasks.length){host.innerHTML='<div class="empty"><b>Your first streak starts here.</b>Create a task, choose your target, then tap each date when you complete it.</div>';return}
+ host.innerHTML=tasks.map(t=>{
+  const end=addDays(t.start,t.days-1), count=t.done.filter(d=>d>=t.start&&d<=end).length, pct=Math.round(count/t.days*100), st=streak(t);
+  const off=monthOffsets[t.id]||0, base=dateObj(t.start), view=new Date(base.getFullYear(),base.getMonth()+off,1), y=view.getFullYear(),m=view.getMonth(), first=new Date(y,m,1).getDay(), total=new Date(y,m+1,0).getDate();
+  let cells='';for(let i=0;i<first;i++)cells+='<div class="day blank"></div>';
+  for(let n=1;n<=total;n++){const d=iso(new Date(y,m,n)), inPlan=d>=t.start&&d<=end, done=t.done.includes(d), future=d>todayISO();cells+=`<button class="day ${done?'done':''} ${d===todayISO()?'today':''} ${!inPlan?'out':''}" data-task="${t.id}" data-date="${d}" ${!inPlan||future?'disabled':''} aria-label="${d}${done?', completed':''}">${done?'✓':n}</button>`}
+  return `<article class="task"><div class="tasktop"><div><div class="taskname">${esc(t.name)}</div><div class="taskmeta">${t.days} day goal · ${t.start} → ${end}</div></div><div class="taskactions"><button class="iconbtn" data-edit="${t.id}" aria-label="Edit task">✎</button><button class="iconbtn" data-delete="${t.id}" aria-label="Delete task">×</button></div></div>
+  <div class="stats"><div class="stat"><b>${count}<small style="font-size:12px;color:var(--muted)">/${t.days}</small></b><span>Days done</span></div><div class="stat"><b>${st}</b><span>Current streak</span></div><div class="stat"><b>${t.days-count}</b><span>Days left</span></div></div>
+  <div class="progresshead"><span>Goal progress</span><b>${pct}%</b></div><div class="bar"><i style="width:${pct}%"></i></div>
+  <div class="calhead"><strong>${view.toLocaleString(undefined,{month:'long',year:'numeric'})}</strong><div class="monthnav"><button class="ghost" data-month="${t.id}" data-step="-1">‹</button><button class="ghost" data-month="${t.id}" data-step="1">›</button></div></div>
+  <div class="week"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div><div class="days">${cells}</div>
+  <div class="legend"><span><i class="dot"></i>Completed</span><span><i class="dot pending"></i>Not completed</span></div><div class="note">Tap a date to mark it complete. Tap again to undo. Future dates are locked.</div></article>`
+ }).join('');
+}
+function openDialog(t){editing=t?.id||null;$('#dialogTitle').textContent=t?'Edit task':'Create a task';$('#taskName').value=t?.name||'';$('#taskDays').value=t?.days||30;$('#taskStart').value=t?.start||todayISO();$('#taskDialog').showModal()}
+$('#addBtn').onclick=()=>openDialog();$('#cancelBtn').onclick=()=>$('#taskDialog').close();
+$('#taskForm').onsubmit=e=>{e.preventDefault();const name=$('#taskName').value.trim(),days=Number($('#taskDays').value),start=$('#taskStart').value;if(!name||!start||days<1||days>366)return;
+ if(editing){const t=tasks.find(x=>x.id===editing);t.name=name;t.days=days;t.start=start;t.done=t.done.filter(d=>d>=start&&d<=addDays(start,days-1))}
+ else tasks.unshift({id:crypto.randomUUID(),name,days,start,done:[]});$('#taskDialog').close();save()};
+$('#taskList').addEventListener('click',e=>{
+ const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.date){const t=tasks.find(x=>x.id===b.dataset.task),d=b.dataset.date;if(t.done.includes(d))t.done=t.done.filter(x=>x!==d);else t.done.push(d);save()}
+ if(b.dataset.month){monthOffsets[b.dataset.month]=(monthOffsets[b.dataset.month]||0)+Number(b.dataset.step);render()}
+ if(b.dataset.edit)openDialog(tasks.find(x=>x.id===b.dataset.edit));
+ if(b.dataset.delete){const t=tasks.find(x=>x.id===b.dataset.delete);if(confirm(`Delete “${t.name}” and its progress?`)){tasks=tasks.filter(x=>x.id!==t.id);save()}}
+});
+render();
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>
