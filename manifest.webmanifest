@@ -6,7 +6,7 @@
   "display": "standalone",
   "background_color": "#101114",
   "theme_color": "#101114",
-  "description": "Set a goal, mark off each day, and build your streak.",
+  "description": "Build habits, one day at a time.",
   "icons": [
     {
       "src": "icons/icon-192.png",

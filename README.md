@@ -1,14 +1,19 @@
-# Daymark PWA v3
+# Daymark PWA v5
 
-Features: multiple streaks, calendar check-offs and undo, current/longest streaks, progress and countdown, yearly heatmap, four themes, completion animation, optional daily reminders, and fresh-streak prompts.
+Features:
+- Multiple streak tasks, calendar check-offs and undo
+- Reorder tasks with up/down arrows
+- Pin important tasks; pinned tasks stay above unpinned tasks
+- One-tap **Mark all today** completes today's date across every active task calendar
+- Current/longest streaks, progress and countdown, yearly heatmap, four themes, logo-only splash
+- Optional reminders and fresh-streak restart prompts
+- Offline app shell; data stored locally in browser storage
 
-When a streak breaks because a day was missed, or the challenge is completed/its period ends, Daymark asks whether to start a fresh streak. Choose a new length in weeks (1–52) and a start date. The previous streak remains as a separate record.
-
-## Install on Android
-Host all files in this folder on an HTTPS site (GitHub Pages, Netlify or Cloudflare Pages). Open the URL in Chrome on Android, then use ⋮ → Install app / Add to Home screen. A PWA cannot be installed directly from a ZIP; it must be served over HTTPS.
+## Install/update on Android
+Host all files in this folder on HTTPS. For an existing GitHub Pages deployment, replace the repository files with these files; the URL stays the same. Reload the PWA after deployment.
 
 ## Reminder limitation
-Reminders are checked while the app is open or returns to the foreground. Android may suspend a fully closed PWA, so notifications are not guaranteed when closed. Reliable background reminders require push infrastructure and server-side scheduling.
+Reminders are checked while the app is open or returns to the foreground. Reliable background notifications require push infrastructure and server-side scheduling.
 
 ## Privacy
-No account or server is used. Data is stored locally in browser storage. Clearing site data erases it.
+No account or server is used. Clearing browser site data erases local task data.

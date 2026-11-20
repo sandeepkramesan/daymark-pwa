@@ -18,7 +18,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:24p
 button.primary{background:var(--accent);color:#161a10;border:0;border-radius:13px;padding:12px 16px;font-weight:750}button.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:9px 12px}
 .intro{padding:20px 0 22px}.eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase}.intro h1{font-size:clamp(28px,6vw,42px);line-height:1.05;letter-spacing:-1.6px;margin:8px 0}.intro p{color:var(--muted);margin:8px 0 0}
 .tasklist{display:grid;gap:14px}.empty{border:1px dashed #454a54;border-radius:18px;padding:32px 22px;text-align:center;color:var(--muted)}.empty b{display:block;color:var(--text);font-size:18px;margin-bottom:5px}
-.task{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:17px;overflow:hidden}.tasktop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.taskname{font-size:19px;font-weight:750;letter-spacing:-.4px;overflow-wrap:anywhere}.taskmeta{font-size:12px;color:var(--muted);margin-top:4px}.taskactions{display:flex;gap:7px}.iconbtn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--muted)}
+.task{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:17px;overflow:hidden}.tasktop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.taskname{font-size:19px;font-weight:750;letter-spacing:-.4px;overflow-wrap:anywhere}.taskmeta{font-size:12px;color:var(--muted);margin-top:4px}.taskactions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.tasktools{display:flex;gap:5px}.tasktools .iconbtn{font-size:14px}.task.pinned{border-color:var(--accent)}.pinmark{color:var(--accent);font-size:11px;margin-left:6px}.bulkbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 12px;padding:11px 12px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}.bulkbar span{font-size:12px;color:var(--muted)}.bulkbar button{white-space:nowrap;font-size:12px;padding:9px 11px}.iconbtn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--muted)}
 .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:16px 0}.stat{background:var(--panel2);border-radius:12px;padding:10px}.stat b{display:block;font-size:20px;letter-spacing:-.6px}.stat span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
 .progresshead{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:7px}.bar{height:7px;border-radius:9px;background:#343842;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent);border-radius:9px}
 .calhead{display:flex;justify-content:space-between;align-items:center;margin:19px 0 10px}.calhead strong{font-size:13px}.monthnav{display:flex;gap:6px}.monthnav button{width:30px;height:30px;padding:0}.week,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.week span{text-align:center;color:#858b97;font-size:10px;padding:4px 0}.day{aspect-ratio:1;border-radius:10px;background:#23262d;border:1px solid transparent;color:#dce0e7;display:grid;place-items:center;position:relative;font-size:12px;padding:0}.day.blank{background:transparent}.day.out{opacity:.28}.day.done{background:var(--accent);color:#17200d;font-weight:850}.day.today{border-color:var(--accent)}.day:disabled{cursor:default;opacity:.4}.legend{display:flex;gap:14px;color:var(--muted);font-size:11px;margin-top:12px}.dot{display:inline-block;width:8px;height:8px;border-radius:3px;margin-right:5px;background:var(--accent)}.dot.pending{background:#343842}
@@ -26,15 +26,21 @@ button.primary{background:var(--accent);color:#161a10;border:0;border-radius:13p
 .note{font-size:11px;color:var(--muted);margin-top:12px}
 dialog{border:1px solid var(--line);border-radius:20px;background:var(--panel);color:var(--text);width:min(440px,calc(100% - 28px));padding:22px;box-shadow:0 20px 80px #0009}dialog::backdrop{background:#000a}dialog h2{margin:0 0 16px;font-size:22px}.field{display:grid;gap:6px;margin:13px 0}.field label{font-size:12px;color:var(--muted)}.field input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:12px;color:var(--text)}.formactions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.danger{color:var(--red)!important}
 .restart-copy{color:var(--muted);font-size:13px;line-height:1.5}.restart-highlight{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0}.restart-highlight b{color:var(--accent)}
+
+#splash{position:fixed;inset:0;z-index:9999;background:#101114;display:grid;place-items:center;opacity:1;visibility:visible;transition:opacity .35s ease,visibility .35s ease}
+#splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+.splash-logo{width:88px;height:88px;border-radius:25px;background:#c6f36a;color:#161a10;display:grid;place-items:center;font-size:54px;font-weight:900;line-height:1;box-shadow:0 12px 45px #0005}
+@media(prefers-reduced-motion:reduce){#splash{transition:none}}
 footer{text-align:center;color:#777e8a;font-size:11px;padding:24px 0 10px}
 @media(min-width:620px){.app{padding-left:26px;padding-right:26px}.task{padding:21px}.day{border-radius:12px;font-size:13px}}
 </style>
 </head>
 <body>
+<div id="splash" aria-label="Daymark"><div class="splash-logo">✓</div></div>
 <div class="app">
 <header><div class="brand"><div class="mark">✓</div><div><strong>daymark</strong><small>show up daily</small></div></div><button class="primary" id="addBtn">＋ New task</button></header>
 <section class="intro"><div class="eyebrow">Small steps. Real progress.</div><h1>Make every day<br>count.</h1><p>Set a goal, mark each day you show up, and watch your streak grow.</p></section>
-<div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:12px;color:var(--muted);font-size:12px">Theme <select id="theme"><option value="dark">Midnight</option><option value="light">Light</option><option value="violet">Violet</option><option value="ocean">Ocean</option></select></div><main id="taskList" class="tasklist"></main>
+<div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:12px;color:var(--muted);font-size:12px">Theme <select id="theme"><option value="dark">Midnight</option><option value="light">Light</option><option value="violet">Violet</option><option value="ocean">Ocean</option></select></div><div class="bulkbar" id="bulkBar"><span id="bulkInfo">Mark today across your active tasks</span><button class="primary" id="bulkComplete">✓ Mark all today</button></div><main id="taskList" class="tasklist"></main>
 <footer>Your progress is saved on this device.</footer>
 </div>
 <dialog id="taskDialog">
@@ -100,15 +106,23 @@ $('#restartForm').onsubmit=e=>{e.preventDefault();const old=tasks.find(x=>x.id==
  tasks.unshift({id:crypto.randomUUID(),name:old.name,days:weeks*7,start,reminder:old.reminder||'',done:[]});
  activeRestartPrompt=null;$('#restartDialog').close();save();
 };
+function orderedTasks(){return [...tasks].sort((a,b)=>(Number(!!b.pinned)-Number(!!a.pinned))||((a.order??tasks.indexOf(a))-(b.order??tasks.indexOf(b))))}
 function render(){
  const host=$('#taskList');
- if(!tasks.length){host.innerHTML='<div class="empty"><b>Your first streak starts here.</b>Create a task, choose your target, then tap each date when you complete it.</div>';return}
- host.innerHTML=tasks.map(t=>{
+ if(!tasks.length){host.innerHTML='<div class="empty"><b>Your first streak starts here.</b>Create a task, choose your target, then tap each date when you complete it.</div>';$('#bulkBar').style.display='none';return}
+ $('#bulkBar').style.display='flex';
+ const today=todayISO(), eligible=tasks.filter(t=>today>=t.start&&today<=addDays(t.start,t.days-1)), pending=eligible.filter(t=>!t.done.includes(today));
+ $('#bulkInfo').textContent=pending.length?`${pending.length} task${pending.length===1?'':'s'} still need today's check-off`:'All active tasks are marked for today';
+ $('#bulkComplete').disabled=!pending.length;$('#bulkComplete').style.opacity=pending.length?1:.55;
+ const ordered=orderedTasks();
+ host.innerHTML=ordered.map((t,index)=>{
+  t.done=t.done||[];
   const end=addDays(t.start,t.days-1), count=t.done.filter(d=>d>=t.start&&d<=end).length, pct=Math.round(count/t.days*100), st=streak(t), best=longest(t), left=Math.max(0,t.days-count);
   const off=monthOffsets[t.id]||0, base=dateObj(t.start), view=new Date(base.getFullYear(),base.getMonth()+off,1), y=view.getFullYear(),m=view.getMonth(), first=new Date(y,m,1).getDay(), total=new Date(y,m+1,0).getDate();
   let cells='';for(let i=0;i<first;i++)cells+='<div class="day blank"></div>';
-  for(let n=1;n<=total;n++){const d=iso(new Date(y,m,n)), inPlan=d>=t.start&&d<=end, done=t.done.includes(d), future=d>todayISO();cells+=`<button class="day ${done?'done':''} ${d===todayISO()?'today':''} ${popDate===t.id+':'+d?'pop':''} ${!inPlan?'out':''}" data-task="${t.id}" data-date="${d}" ${!inPlan||future?'disabled':''} aria-label="${d}${done?', completed':''}">${done?'✓':n}</button>`}
-  return `<article class="task"><div class="tasktop"><div><div class="taskname">${esc(t.name)}</div><div class="taskmeta">${t.days} day goal · ${t.start} → ${end}</div></div><div class="taskactions"><button class="iconbtn" data-edit="${t.id}" aria-label="Edit task">✎</button><button class="iconbtn" data-delete="${t.id}" aria-label="Delete task">×</button></div></div>
+  for(let n=1;n<=total;n++){const d=iso(new Date(y,m,n)), inPlan=d>=t.start&&d<=end, done=t.done.includes(d), future=d>today;cells+=`<button class="day ${done?'done':''} ${d===today?'today':''} ${popDate===t.id+':'+d?'pop':''} ${!inPlan?'out':''}" data-task="${t.id}" data-date="${d}" ${!inPlan||future?'disabled':''} aria-label="${d}${done?', completed':''}">${done?'✓':n}</button>`}
+  const pinned=!!t.pinned, previous=ordered[index-1], next=ordered[index+1];
+  return `<article class="task ${pinned?'pinned':''}" data-card="${t.id}"><div class="tasktop"><div><div class="taskname">${esc(t.name)}${pinned?'<span class="pinmark">📌 PINNED</span>':''}</div><div class="taskmeta">${t.days} day goal · ${t.start} → ${end}</div></div><div class="taskactions"><div class="tasktools"><button class="iconbtn" data-move="${t.id}" data-direction="up" aria-label="Move task up" title="Move up" ${!previous||!!previous.pinned!==pinned?'disabled':''}>↑</button><button class="iconbtn" data-move="${t.id}" data-direction="down" aria-label="Move task down" title="Move down" ${!next||!!next.pinned!==pinned?'disabled':''}>↓</button><button class="iconbtn" data-pin="${t.id}" aria-label="${pinned?'Unpin':'Pin'} task" title="${pinned?'Unpin':'Pin'}">${pinned?'📌':'♧'}</button></div><button class="iconbtn" data-edit="${t.id}" aria-label="Edit task">✎</button><button class="iconbtn" data-delete="${t.id}" aria-label="Delete task">×</button></div></div>
   <div class="stats"><div class="stat"><b>${count}<small style="font-size:12px;color:var(--muted)">/${t.days}</small></b><span>Days done</span></div><div class="stat"><b>${st} 🔥</b><span>Current streak</span></div><div class="stat"><b>${best}</b><span>Longest streak</span></div></div>
   <div class="stats" style="margin-top:-8px"><div class="stat" style="grid-column:span 2"><b>${left===0?"Goal achieved 🎉":left+" days"}</b><span>${left===0?"Challenge completed":"Days remaining"}</span></div><div class="stat"><b>${pct}%</b><span>Complete</span></div></div><div class="progresshead"><span>Goal progress</span><b>${pct}%</b></div><div class="bar"><i style="width:${pct}%"></i></div>
   <div class="calhead"><strong>${view.toLocaleString(undefined,{month:'long',year:'numeric'})}</strong><div class="monthnav"><button class="ghost" data-month="${t.id}" data-step="-1">‹</button><button class="ghost" data-month="${t.id}" data-step="1">›</button></div></div>
@@ -122,8 +136,11 @@ $('#addBtn').onclick=()=>openDialog();$('#cancelBtn').onclick=()=>$('#taskDialog
 $('#taskForm').onsubmit=async e=>{e.preventDefault();const name=$('#taskName').value.trim(),days=Number($('#taskDays').value),start=$('#taskStart').value,reminder=$('#taskReminder').value;if(!name||!start||days<1||days>366)return;
  if(reminder&&'Notification'in window&&Notification.permission==='default'){try{await Notification.requestPermission()}catch{}} if(editing){const t=tasks.find(x=>x.id===editing);t.name=name;t.days=days;t.start=start;t.reminder=reminder;t.done=t.done.filter(d=>d>=start&&d<=addDays(start,days-1))}
  else tasks.unshift({id:crypto.randomUUID(),name,days,start,reminder,done:[]});$('#taskDialog').close();save()};
+$('#bulkComplete').onclick=()=>{const d=todayISO();let changed=0;tasks.forEach(t=>{if(d>=t.start&&d<=addDays(t.start,t.days-1)&&!t.done.includes(d)){t.done.push(d);changed++}});if(changed){save();toast(`Marked today complete for ${changed} task${changed===1?'':'s'}! ✨`)}};
 $('#taskList').addEventListener('click',e=>{
  const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.pin){const t=tasks.find(x=>x.id===b.dataset.pin);t.pinned=!t.pinned;save();return}
+ if(b.dataset.move){const list=orderedTasks(),i=list.findIndex(x=>x.id===b.dataset.move),j=i+(b.dataset.direction==='up'?-1:1);if(j>=0&&j<list.length){[list[i],list[j]]=[list[j],list[i]];list.forEach((t,n)=>t.order=n);tasks=list;save()}return}
  if(b.dataset.date){const t=tasks.find(x=>x.id===b.dataset.task),d=b.dataset.date;if(t.done.includes(d))t.done=t.done.filter(x=>x!==d);else{t.done.push(d);popDate=t.id+':'+d}save()}
  if(b.dataset.month){monthOffsets[b.dataset.month]=(monthOffsets[b.dataset.month]||0)+Number(b.dataset.step);render()}
  if(b.dataset.edit)openDialog(tasks.find(x=>x.id===b.dataset.edit)); if(b.dataset.reminder)openDialog(tasks.find(x=>x.id===b.dataset.reminder));
@@ -132,6 +149,7 @@ $('#taskList').addEventListener('click',e=>{
 $('#theme').value=savedTheme;$('#theme').onchange=e=>{document.documentElement.dataset.theme=e.target.value;localStorage.setItem('daymark-theme',e.target.value)};
 function checkReminders(){if(!('Notification'in window)||Notification.permission!=='granted')return;const d=todayISO(),now=new Date(),tm=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');tasks.forEach(t=>{const k='daymark-reminder-'+t.id;if(t.reminder===tm&&!t.done.includes(d)&&localStorage.getItem(k)!==d){new Notification('Daymark reminder',{body:'Time for: '+t.name});localStorage.setItem(k,d)}})}setInterval(checkReminders,30000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkReminders()});
 render();
+window.addEventListener('load',()=>{setTimeout(()=>$('#splash')?.classList.add('hide'),650)});
 if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script>
 </body></html>
