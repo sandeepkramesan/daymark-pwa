@@ -337,7 +337,7 @@ function openStreakDialog(taskId,date){
  const initial=t?.days>0?Number(t.days):30;
  $('#streakCustomLength').value='';
  setStreakLength([7,21,30,60,90,365].includes(initial)?initial:null);
- if(![7,21,30,60,90,365].includes(initial)){ $('#streakCustomLength').value=initial; }
+ if(![7,21,30,60,90,365].includes(initial)){$('#streakCustomLength').value=initial;setStreakLength(initial);}
  $('#streakDialog').showModal();
 }
 let completedStreakTaskId=null;
@@ -382,11 +382,16 @@ $('#streakForm').onsubmit=e=>{
  e.preventDefault();
  const t=tasks.find(x=>x.id===pendingStreak.taskId),date=pendingStreak.date,days=Number($('#streakLength').value);
  if(!t||!date||date>todayISO()||days<1||days>3660)return;
- t.history=t.history||[];
- if(t.start&&Number(t.days)>0&&(t.done||[]).length){
-   t.history.push({start:t.start,days:Number(t.days),done:[...new Set(t.done)],endedAt:date});
+ t.history=Array.isArray(t.history)?t.history:[];
+ const previousDates=[...new Set(t.done||[])];
+ if(t.start&&Number(t.days)>0&&previousDates.length){
+   const existing=t.history.find(h=>h.start===t.start&&Number(h.days)===Number(t.days));
+   if(existing){existing.done=[...new Set([...(existing.done||[]),...previousDates])];existing.endedAt=date;}
+   else{t.history.push({start:t.start,days:Number(t.days),done:previousDates,endedAt:date});}
  }
- t.start=date;t.days=days;t.done=[...new Set([...(t.done||[]),date])];t.paused=false;delete t.pausedAt;
+ // Preserve every completion date; starting a new plan changes only the active streak window.
+ t.done=[...new Set([...previousDates,date])];
+ t.start=date;t.days=days;t.paused=false;delete t.pausedAt;
  $('#streakDialog').close();pendingStreak={taskId:null,date:null};save();
  toast('New streak started!');
  if(days===1)celebrateStreakCompletion(t,date);

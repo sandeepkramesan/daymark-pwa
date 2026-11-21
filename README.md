@@ -32,3 +32,6 @@ Host all files in this folder on HTTPS. For an existing GitHub Pages deployment,
 No account or server is used. Clearing browser site data erases local habit data.
 
 Daily reminder scheduling is not included because browser-based reminders are not reliable when the app is closed. Existing habit data continues to use the `daymark-tasks-v2` local storage key.
+
+- Custom streak lengths from 1 to 3,660 days, alongside preset durations.
+- Previous completion dates remain visible in the calendar when a new streak begins.
