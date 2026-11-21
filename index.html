@@ -380,10 +380,16 @@ $('#streakCustomLength').oninput=()=>{
 $('#streakCancel').onclick=()=>{$('#streakDialog').close();pendingStreak={taskId:null,date:null}};
 $('#streakForm').onsubmit=e=>{
  e.preventDefault();
- const t=tasks.find(x=>x.id===pendingStreak.taskId),date=pendingStreak.date,days=Number($('#streakLength').value);
- if(!t||!date||date>todayISO()||days<1||days>3660)return;
+ const t=tasks.find(x=>x.id===pendingStreak.taskId),date=pendingStreak.date;
+ const customRaw=$('#streakCustomLength').value.trim();
+ const customDays=customRaw===''?null:Number(customRaw);
+ const days=customDays!==null?customDays:Number($('#streakLength').value);
+ if(!t||!date||date>todayISO()||!Number.isInteger(days)||days<1||days>3660){
+   if(customRaw!==''&&(!Number.isInteger(customDays)||customDays<1||customDays>3660))toast('Enter a whole number between 1 and 3660.');
+   return;
+ }
  t.history=Array.isArray(t.history)?t.history:[];
- const previousDates=[...new Set(t.done||[])];
+ const previousDates=[...new Set([...(t.done||[]),...t.history.flatMap(h=>Array.isArray(h.done)?h.done:[])])];
  if(t.start&&Number(t.days)>0&&previousDates.length){
    const existing=t.history.find(h=>h.start===t.start&&Number(h.days)===Number(t.days));
    if(existing){existing.done=[...new Set([...(existing.done||[]),...previousDates])];existing.endedAt=date;}
@@ -405,18 +411,35 @@ $('#taskList').addEventListener('click',e=>{
  if(b.dataset.move){const list=orderedTasks(),i=list.findIndex(x=>x.id===b.dataset.move),j=i+(b.dataset.direction==='up'?-1:1);if(j>=0&&j<list.length){[list[i],list[j]]=[list[j],list[i]];list.forEach((t,n)=>t.order=n);tasks=list;save()}return}
  if(b.dataset.date){
   const t=tasks.find(x=>x.id===b.dataset.task),d=b.dataset.date;
-  if((t.done||[]).includes(d)){
-   setUndo([{taskId:t.id,date:d,wasDone:true}],'Unmark day');t.done=t.done.filter(x=>x!==d);save();
+  const history=t.history=Array.isArray(t.history)?t.history:[];
+  const completed=new Set([...(t.done||[]),...history.flatMap(h=>Array.isArray(h.done)?h.done:[])]);
+  const wasCompleted=completed.has(d);
+  const previousCompleted=completed.has(addDays(d,-1));
+  const nextCompleted=completed.has(addDays(d,1));
+  const removeCompletion=()=>{
+    t.done=(t.done||[]).filter(x=>x!==d);
+    history.forEach(h=>{h.done=(h.done||[]).filter(x=>x!==d)});
+    setUndo([{taskId:t.id,date:d,wasDone:true}],'Unmark day');
+    save();
+  };
+  if(wasCompleted){
+    const isHistorical=history.some(h=>(h.done||[]).includes(d)) && !(t.start&&d>=t.start&&d<=addDays(t.start,Number(t.days)-1));
+    if(isHistorical&&previousCompleted&&nextCompleted){
+      removeCompletion();toast('Check-off removed.');
+    }else if(isHistorical&&previousCompleted){
+      if(confirm('The previous day is completed. Do you want to continue this streak from this date?'))openStreakDialog(t.id,d);
+    }else{
+      removeCompletion();
+    }
   }else{
-   const hasActivePlan=!!t.start&&Number(t.days)>0&&d>=t.start&&d<=addDays(t.start,t.days-1);
-   const previousDate=addDays(d,-1);
-   const continuesStreak=hasActivePlan&&(t.done||[]).includes(previousDate);
-   if(continuesStreak){
-    setUndo([{taskId:t.id,date:d,wasDone:false}],'Mark day');
-    t.done=t.done||[];t.done.push(d);save();toast('Day checked off!');celebrateStreakCompletion(t,d);
-   }else{
-    openStreakDialog(t.id,d);
-   }
+    const hasActivePlan=!!t.start&&Number(t.days)>0&&d>=t.start&&d<=addDays(t.start,Number(t.days)-1);
+    const continuesStreak=hasActivePlan&&previousCompleted;
+    if(continuesStreak){
+      setUndo([{taskId:t.id,date:d,wasDone:false}],'Mark day');
+      t.done=t.done||[];t.done.push(d);save();toast('Day checked off!');celebrateStreakCompletion(t,d);
+    }else{
+      openStreakDialog(t.id,d);
+    }
   }
  }
  if(b.dataset.month){monthOffsets[b.dataset.month]=(monthOffsets[b.dataset.month]||0)+Number(b.dataset.step);render()}

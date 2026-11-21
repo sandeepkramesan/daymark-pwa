@@ -35,3 +35,6 @@ Daily reminder scheduling is not included because browser-based reminders are no
 
 - Custom streak lengths from 1 to 3,660 days, alongside preset durations.
 - Previous completion dates remain visible in the calendar when a new streak begins.
+
+- Historical check-offs remain interactive: dates can be unchecked, and an earlier completed date can be used to continue a streak.
+- Custom streak durations accept whole numbers from 1 to 3,660 days.
