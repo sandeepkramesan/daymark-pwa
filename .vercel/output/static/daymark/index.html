@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101114">
+<meta name="description" content="A simple habit calendar with progress insights, one day at a time.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="daymark">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/daymark-192.png">
+<link rel="apple-touch-icon" href="icons/daymark-192.png">
+<link rel="stylesheet" href="app.css">
+<title>daymark</title>
+</head>
+<body data-daymark="standalone">
+<div id="splash" aria-label="Daymark"><div class="splash-logo">✓</div></div>
+<div class="app">
+<header>
+  <div class="brand"><div class="mark">✓</div><div><strong>daymark</strong><small>show up daily</small></div></div>
+  <button class="primary" id="addBtn" type="button">＋ New task</button>
+</header>
+<section class="intro">
+  <div class="eyebrow">Small steps. Real progress.</div>
+  <h1>Make every day<br>count.</h1>
+  <p>Set a goal, mark each day you show up, and watch your streak grow.</p>
+</section>
+<section class="dashboard" id="dashboard">
+  <div class="dashcard">
+    <div class="dashhead"><strong>Today</strong><span class="dashmuted" id="todayLabel"></span></div>
+    <div class="todaycard"><div class="ring" id="todayRing" style="--progress:0deg"><b id="todayPct">0%</b></div><div class="todaycopy"><b id="todayCount">0/0</b><span>habits completed</span></div></div>
+  </div>
+  <div class="dashcard">
+    <div class="dashhead"><strong>Your stats</strong><span class="dashmuted">All time</span></div>
+    <div class="globalstats">
+      <div class="globalstat"><b id="statChecks">0</b><span>Check-ins</span></div>
+      <div class="globalstat"><b id="statActive">0</b><span>Active</span></div>
+      <div class="globalstat"><b id="statRate">0%</b><span>Avg. progress</span></div>
+    </div>
+  </div>
+  <div class="dashcard weekly">
+    <div class="dashhead"><strong>This week</strong><span class="dashmuted" id="weekRange"></span></div>
+    <div class="weekstrip" id="weekStrip"></div>
+    <div class="weeklyfoot"><span>Daily habit completion</span><span id="weekTotal">0 check-ins</span></div>
+  </div>
+</section>
+<div class="dashactions"><span class="dashmuted" id="undoHint">Your latest check-off can be undone</span><button class="ghost" id="undoBtn" type="button" disabled>↶ Undo last check-off</button></div>
+<div class="toolsbar">
+  <input id="habitSearch" type="search" placeholder="Search habits…" aria-label="Search habits">
+  <select id="categoryFilter" aria-label="Filter by category">
+    <option value="all">All categories</option>
+    <option>Health</option><option>Fitness</option><option>Learning</option><option>Productivity</option><option>Personal</option><option>Other</option>
+  </select>
+</div>
+<div class="backupbar"><button class="ghost" id="exportBtn" type="button">↓ Export backup</button><button class="ghost" id="importBtn" type="button">↑ Import backup</button><input type="file" id="importFile" accept="application/json,.json" hidden></div>
+<button class="ghost" id="archiveToggle" type="button">Archive · <span id="archiveCount">0</span></button>
+<div id="archiveHead" class="archivehead" hidden><strong>Archived habits</strong><span class="dashmuted">History kept safely</span></div>
+<main id="archiveList" class="tasklist" hidden></main>
+<button class="primary focus-exit" id="exitFocus" type="button">Exit focus mode</button>
+<div class="themebar">Theme
+  <select id="theme" aria-label="Theme">
+    <option value="dark">Midnight</option>
+    <option value="light">Light</option>
+    <option value="violet">Violet</option>
+    <option value="ocean">Ocean</option>
+  </select>
+</div>
+<div class="bulkbar" id="bulkBar"><span id="bulkInfo">Mark today across your active tasks</span><button class="primary" id="bulkComplete" type="button">✓ Mark all today</button></div>
+<main id="taskList" class="tasklist"></main>
+<footer>Your progress is saved on this device.</footer>
+</div>
+
+<dialog id="taskDialog">
+  <form id="taskForm">
+    <h2 id="dialogTitle">Create a habit</h2>
+    <div class="field"><label for="taskName">What do you want to do?</label><input id="taskName" maxlength="70" placeholder="e.g. Read 20 pages" required></div>
+    <div class="field"><label for="taskCategory">Category</label>
+      <select id="taskCategory"><option>Health</option><option>Fitness</option><option>Learning</option><option>Productivity</option><option>Personal</option><option>Other</option></select>
+    </div>
+    <div class="field"><label for="taskColor">Habit colour</label>
+      <select id="taskColor">
+        <option value="">Use theme colour</option>
+        <option value="#c6f36a">Lime</option>
+        <option value="#79d8df">Ocean</option>
+        <option value="#c3a5ff">Violet</option>
+        <option value="#ffadad">Coral</option>
+        <option value="#ffc66d">Amber</option>
+        <option value="#91d6a8">Mint</option>
+      </select>
+    </div>
+    <div class="formactions"><button type="button" class="ghost" id="cancelBtn">Cancel</button><button class="primary" type="submit">Save task</button></div>
+  </form>
+</dialog>
+
+<dialog id="streakDialog">
+  <form id="streakForm">
+    <h2>Start a new streak</h2>
+    <p class="restart-copy" id="streakPromptDate">Selected date</p>
+    <div class="field"><label>Choose a streak length</label>
+      <div class="streak-presets" role="group" aria-label="Streak length presets">
+        <button type="button" class="streak-preset" data-days="7">7 days</button>
+        <button type="button" class="streak-preset" data-days="21">21 days</button>
+        <button type="button" class="streak-preset selected" data-days="30">30 days</button>
+        <button type="button" class="streak-preset" data-days="60">60 days</button>
+        <button type="button" class="streak-preset" data-days="90">90 days</button>
+        <button type="button" class="streak-preset" data-days="365">365 days</button>
+      </div>
+    </div>
+    <div class="field"><label for="streakCustomLength">Custom number of days</label><input id="streakCustomLength" type="number" min="1" max="3660" inputmode="numeric" placeholder="Enter a custom duration"></div>
+    <input id="streakLength" type="hidden" value="30">
+    <div class="formactions"><button type="button" class="ghost" id="streakCancel">Cancel</button><button class="primary" type="submit">Start streak</button></div>
+  </form>
+</dialog>
+
+<dialog id="historyDialog">
+  <form id="historyForm">
+    <h2>Earlier check-off</h2>
+    <p class="restart-copy" id="historyCopy">This date is part of a previous streak.</p>
+    <div class="formactions">
+      <button type="button" class="ghost" id="historyClose">Close</button>
+      <button type="button" class="ghost" id="historyUncheck">Uncheck</button>
+      <button type="button" class="primary" id="historyContinue">Continue from here</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="streakCompleteDialog" class="celebration-dialog">
+  <div class="celebration-content">
+    <div class="celebration-confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="celebration-trophy" aria-hidden="true">🏆</div>
+    <p class="celebration-eyebrow">STREAK COMPLETED</p>
+    <h2 id="streakCompleteTitle">You did it!</h2>
+    <p id="streakCompleteMessage">You showed up every day and completed your goal.</p>
+    <div class="celebration-actions" id="celebrationChoices">
+      <button type="button" class="ghost" id="celebrationDone">Maybe later</button>
+      <button type="button" class="primary" id="celebrationExtend">Extend my streak</button>
+    </div>
+    <div id="celebrationExtendPanel" hidden>
+      <p class="restart-copy">Add more days onto this same streak. Check-offs you already made stay put.</p>
+      <div class="field"><label>How many more days?</label>
+        <div class="streak-presets" role="group" aria-label="Extension length">
+          <button type="button" class="extend-preset" data-days="7">7 days</button>
+          <button type="button" class="extend-preset" data-days="21">21 days</button>
+          <button type="button" class="extend-preset" data-days="30">30 days</button>
+          <button type="button" class="extend-preset" data-days="60">60 days</button>
+          <button type="button" class="extend-preset" data-days="90">90 days</button>
+          <button type="button" class="extend-preset" data-days="365">365 days</button>
+        </div>
+      </div>
+      <div class="field"><label for="extendCustom">Custom number of days</label><input id="extendCustom" type="number" min="1" max="3660" inputmode="numeric" placeholder="Enter a custom duration"></div>
+      <input id="extendLength" type="hidden" value="30">
+      <div class="celebration-actions">
+        <button type="button" class="ghost" id="extendBack">Back</button>
+        <button type="button" class="primary" id="extendConfirm">Add days</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="noteDialog">
+  <form id="noteForm">
+    <h2>Daily note</h2>
+    <div class="field"><label for="noteDate">Date</label><input id="noteDate" type="date" required></div>
+    <div class="field"><label for="noteText">What would you like to remember?</label><textarea id="noteText" rows="4" maxlength="500" placeholder="A quick reflection, detail or win…"></textarea></div>
+    <div class="formactions"><button type="button" class="ghost" id="noteCancel">Cancel</button><button class="primary" type="submit">Save note</button></div>
+  </form>
+</dialog>
+<script type="module" src="app.js"></script>
+</body>
+</html>
