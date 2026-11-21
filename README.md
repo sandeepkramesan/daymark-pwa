@@ -1,6 +1,7 @@
 # Daymark
 
 ## Features
+- Previous streak check-ins remain visible in the calendar when a new streak begins.
 - Multiple habits with individual calendars, date check-offs and undo
 - Create habits without choosing a start date or duration; select a calendar date to begin a streak and choose a duration from 7, 21, 30, 60, 90, or 365 days, or enter a custom number
 - Start a new streak from another uncompleted calendar date while preserving previous streak history

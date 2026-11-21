@@ -293,7 +293,7 @@ function taskCardMarkup(t,index,ordered,isArchived=false){
  const off=monthOffsets[t.id]||0,base=hasStarted?dateObj(t.start):dateObj(today),view=new Date(base.getFullYear(),base.getMonth()+off,1),y=view.getFullYear(),m=view.getMonth(),first=new Date(y,m,1).getDay(),total=new Date(y,m+1,0).getDate();
  const paused=!!t.paused,archived=!!t.archived,pinned=!!t.pinned,accent=t.color||'var(--accent)';
  let cells='';for(let i=0;i<first;i++)cells+='<div class="day blank"></div>';
- for(let n=1;n<=total;n++){const d=iso(new Date(y,m,n)),done=(t.done||[]).includes(d),future=d>today;cells+=`<button class="day ${done?'done':''} ${d===today?'today':''} ${popDate===t.id+':'+d?'pop':''}" data-task="${t.id}" data-date="${d}" ${future||paused||archived?'disabled':''} aria-label="${d}${done?', completed':''}">${done?'✓':n}</button>`}
+ for(let n=1;n<=total;n++){const d=iso(new Date(y,m,n)),done=(t.done||[]).includes(d)||(t.history||[]).some(h=>(h.done||[]).includes(d)),future=d>today;cells+=`<button class="day ${done?'done':''} ${d===today?'today':''} ${popDate===t.id+':'+d?'pop':''}" data-task="${t.id}" data-date="${d}" ${future||paused||archived?'disabled':''} aria-label="${d}${done?', completed':''}">${done?'✓':n}</button>`}
  const previous=ordered[index-1],next=ordered[index+1],noteText=t.notes[today]||'';
  const historicChecks=(t.history||[]).reduce((n,h)=>n+(h.done||[]).length,0),allTimeChecks=new Set([...(t.history||[]).flatMap(h=>h.done||[]),...(t.done||[])]).size;const earned=[];if(count>=7)earned.push('7 check-ins');if(count>=30)earned.push('30 check-ins');if(best>=7)earned.push('7-day streak');if(best>=30)earned.push('30-day streak');if(pct===100)earned.push('Goal achieved');
  return `<article class="task ${pinned?'pinned':''} ${paused?'paused':''} ${archived?'archived':''}" data-card="${t.id}" style="--task-accent:${accent}">
@@ -386,7 +386,7 @@ $('#streakForm').onsubmit=e=>{
  if(t.start&&Number(t.days)>0&&(t.done||[]).length){
    t.history.push({start:t.start,days:Number(t.days),done:[...new Set(t.done)],endedAt:date});
  }
- t.start=date;t.days=days;t.done=[date];t.paused=false;delete t.pausedAt;
+ t.start=date;t.days=days;t.done=[...new Set([...(t.done||[]),date])];t.paused=false;delete t.pausedAt;
  $('#streakDialog').close();pendingStreak={taskId:null,date:null};save();
  toast('New streak started!');
  if(days===1)celebrateStreakCompletion(t,date);
