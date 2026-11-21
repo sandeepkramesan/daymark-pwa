@@ -1,6 +1,6 @@
 {
-  "name": "​",
-  "short_name": "Daymark",
+  "name": "daymark",
+  "short_name": "daymark",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
