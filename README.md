@@ -21,7 +21,7 @@
 - Export and import JSON backups of habits, notes, categories, and progress
 - Four themes
 - Offline app shell; habit data is stored locally in the browser
-- App label set to **daymark**
+- App label set to **daymark**, with dedicated Android launcher and splash-screen icons
 
 ## Install/update on Android
 Host all files in this folder on HTTPS. For an existing GitHub Pages deployment, replace the repository files with these files; the URL stays the same. Reload the PWA after deployment.
