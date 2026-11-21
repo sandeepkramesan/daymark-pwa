@@ -93,6 +93,28 @@ footer{text-align:center;color:#777e8a;font-size:11px;padding:24px 0 10px}
 .streak-preset{min-height:42px;border:1px solid var(--line);border-radius:11px;background:var(--panel2);color:var(--text);font-weight:650;padding:8px 5px}
 .streak-preset.selected{border-color:var(--accent);background:var(--accent);color:#151515}
 @media(max-width:520px){.tasktop{display:flex;flex-direction:column;align-items:stretch;gap:9px}.taskactions{width:100%;justify-content:flex-start;gap:5px}.tasktools{gap:5px}.taskactions .iconbtn{flex:0 0 34px}.taskmeta{max-width:100%}}
+
+.celebration-dialog{width:min(92vw,430px);border:1px solid var(--line);border-radius:24px;padding:0;background:var(--panel);color:var(--text);overflow:hidden;box-shadow:0 24px 90px #0009}
+.celebration-dialog::backdrop{background:#050609d9;backdrop-filter:blur(5px)}
+.celebration-content{position:relative;text-align:center;padding:34px 24px 24px;overflow:hidden}
+.celebration-trophy{font-size:62px;line-height:1.2;position:relative;z-index:1;animation:trophy-pop .75s cubic-bezier(.2,1.6,.4,1) both}
+.celebration-eyebrow{font-size:11px;letter-spacing:2px;font-weight:850;color:var(--accent);margin:15px 0 7px}
+.celebration-content h2{font-size:28px;margin:0 0 9px;letter-spacing:-.8px}
+.celebration-content>p:not(.celebration-eyebrow){color:var(--muted);line-height:1.5;margin:0 auto;max-width:290px}
+.celebration-actions{display:flex;gap:9px;justify-content:center;margin-top:25px;flex-wrap:wrap}
+.celebration-actions button{flex:1;min-width:125px}
+.celebration-confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.celebration-confetti i{position:absolute;top:-15px;width:8px;height:14px;border-radius:3px;background:var(--accent);animation:confetti-fall 1.8s ease-out both}
+.celebration-confetti i:nth-child(1){left:8%;animation-delay:.05s;background:#ffc66d;transform:rotate(25deg)}
+.celebration-confetti i:nth-child(2){left:22%;animation-delay:.2s;background:#79d8df}
+.celebration-confetti i:nth-child(3){left:37%;animation-delay:.0s;background:#c3a5ff}
+.celebration-confetti i:nth-child(4){left:58%;animation-delay:.15s;background:#ffadad}
+.celebration-confetti i:nth-child(5){left:73%;animation-delay:.08s;background:#ffc66d}
+.celebration-confetti i:nth-child(6){left:91%;animation-delay:.25s;background:#79d8df}
+.celebration-confetti i:nth-child(7){left:48%;animation-delay:.3s;background:#c3a5ff}
+.celebration-confetti i:nth-child(8){left:83%;animation-delay:.35s;background:#91d6a8}
+@keyframes trophy-pop{0%{transform:translateY(18px) scale(.35);opacity:0}70%{transform:translateY(-5px) scale(1.12)}100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes confetti-fall{0%{transform:translateY(-15px) rotate(0);opacity:0}15%{opacity:1}100%{transform:translateY(190px) rotate(390deg);opacity:0}}
 </style>
 </head>
 <body>
@@ -133,6 +155,19 @@ footer{text-align:center;color:#777e8a;font-size:11px;padding:24px 0 10px}
 </form>
 </dialog>
 <dialog id="streakDialog"><form id="streakForm"><h2>Start a new streak</h2><p class="restart-copy" id="streakPromptDate">Selected date</p><div class="field"><label>Choose a streak length</label><div class="streak-presets" role="group" aria-label="Streak length presets"><button type="button" class="streak-preset" data-days="7">7 days</button><button type="button" class="streak-preset" data-days="21">21 days</button><button type="button" class="streak-preset selected" data-days="30">30 days</button><button type="button" class="streak-preset" data-days="60">60 days</button><button type="button" class="streak-preset" data-days="90">90 days</button><button type="button" class="streak-preset" data-days="365">365 days</button></div></div><div class="field"><label for="streakCustomLength">Custom number of days</label><input id="streakCustomLength" type="number" min="1" max="3660" placeholder="Enter a custom duration"></div><input id="streakLength" type="hidden" value="30"><div class="formactions"><button type="button" class="ghost" id="streakCancel">Cancel</button><button class="primary" type="submit">Start streak</button></div></form></dialog>
+<dialog id="streakCompleteDialog" class="celebration-dialog">
+ <div class="celebration-content">
+  <div class="celebration-confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="celebration-trophy" aria-hidden="true">🏆</div>
+  <p class="celebration-eyebrow">STREAK COMPLETED</p>
+  <h2 id="streakCompleteTitle">You did it!</h2>
+  <p id="streakCompleteMessage">You showed up every day and completed your goal.</p>
+  <div class="celebration-actions">
+   <button type="button" class="ghost" id="celebrationDone">Maybe later</button>
+   <button type="button" class="primary" id="celebrationExtend">Extend my streak</button>
+  </div>
+ </div>
+</dialog>
 <dialog id="noteDialog"><form id="noteForm"><h2>Daily note</h2><div class="field"><label for="noteDate">Date</label><input id="noteDate" type="date" required></div><div class="field"><label for="noteText">What would you like to remember?</label><textarea id="noteText" rows="4" maxlength="500" placeholder="A quick reflection, detail or win…"></textarea></div><div class="formactions"><button type="button" class="ghost" id="noteCancel">Cancel</button><button class="primary" type="submit">Save note</button></div></form></dialog>
 <dialog id="restartDialog">
   <form id="restartForm">
@@ -158,7 +193,7 @@ function addDays(s,n){const d=dateObj(s);d.setDate(d.getDate()+n);return iso(d)}
 function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function streak(t){if(!t.start||!Number(t.days))return 0;let n=0,cursor=todayISO();while(cursor>=t.start&&cursor<=addDays(t.start,t.days-1)&&(t.done||[]).includes(cursor)){n++;cursor=addDays(cursor,-1)}return n}
 function longest(t){let best=0;const groups=[...(t.history||[]),{start:t.start,days:t.days,done:t.done||[]}];for(const g of groups){if(!g.start||!Number(g.days))continue;let run=0,prev='';for(const d of [...new Set(g.done||[])].filter(x=>x>=g.start&&x<=addDays(g.start,g.days-1)).sort()){run=prev&&addDays(prev,1)===d?run+1:1;best=Math.max(best,run);prev=d}}return best}
-function heatmap(t){const y=new Date().getFullYear(),all=[...(t.history||[]).flatMap(h=>h.done||[]),...(t.done||[])];let cells='';for(let i=0;i<365+(new Date(y,1,29).getMonth()===1?1:0);i++){const d=iso(new Date(y,0,i+1));cells+=`<div class="heatcell ${all.includes(d)?'active':''}" title="${d}"></div>`}return `<div class="heatwrap"><div class="heatlabel"><b>${y} consistency heatmap</b> · ${all.filter(d=>d.startsWith(String(y))).length} completed days</div><div class="heat">${cells}</div></div>`}
+function heatmap(t){const y=new Date().getFullYear(),all=[...new Set([...(t.history||[]).flatMap(h=>h.done||[]),...(t.done||[])])];let cells='';for(let i=0;i<365+(new Date(y,1,29).getMonth()===1?1:0);i++){const d=iso(new Date(y,0,i+1));cells+=`<div class="heatcell ${all.includes(d)?'active':''}" title="${d}"></div>`}return `<div class="heatwrap"><div class="heatlabel"><b>${y} consistency heatmap</b> · ${all.filter(d=>d.startsWith(String(y))).length} completed days</div><div class="heat">${cells}</div></div>`}
 let activeRestartPrompt=null;
 function streakStatus(t){
  const end=addDays(t.start,t.days-1), today=todayISO(), completed=t.done.filter(d=>d>=t.start&&d<=end).length;
@@ -222,7 +257,7 @@ function renderDashboard(){
  $('#todayRing').style.setProperty('--progress',(pct*3.6)+'deg');
  $('#todayPct').textContent=pct+'%';
  $('#todayCount').textContent=completed+'/'+eligible.length;
- const visibleTasks=tasks.filter(t=>!t.archived); const checks=visibleTasks.reduce((n,t)=>n+(t.done||[]).length+(t.history||[]).reduce((m,h)=>m+(h.done||[]).length,0),0);
+ const visibleTasks=tasks.filter(t=>!t.archived); const checks=visibleTasks.reduce((n,t)=>n+new Set([...(t.history||[]).flatMap(h=>h.done||[]),...(t.done||[])]).size,0);
  const active=eligible.length;
  const avg=visibleTasks.length?Math.round(visibleTasks.reduce((n,t)=>n+Math.min(100,Math.round((t.done||[]).filter(d=>t.start&&d>=t.start&&d<=addDays(t.start,t.days-1)).length/(Number(t.days)||1)*100)),0)/visibleTasks.length):0;
  $('#statChecks').textContent=checks;
@@ -260,11 +295,11 @@ function taskCardMarkup(t,index,ordered,isArchived=false){
  let cells='';for(let i=0;i<first;i++)cells+='<div class="day blank"></div>';
  for(let n=1;n<=total;n++){const d=iso(new Date(y,m,n)),done=(t.done||[]).includes(d),future=d>today;cells+=`<button class="day ${done?'done':''} ${d===today?'today':''} ${popDate===t.id+':'+d?'pop':''}" data-task="${t.id}" data-date="${d}" ${future||paused||archived?'disabled':''} aria-label="${d}${done?', completed':''}">${done?'✓':n}</button>`}
  const previous=ordered[index-1],next=ordered[index+1],noteText=t.notes[today]||'';
- const historicChecks=(t.history||[]).reduce((n,h)=>n+(h.done||[]).length,0);const earned=[];if(count>=7)earned.push('7 check-ins');if(count>=30)earned.push('30 check-ins');if(best>=7)earned.push('7-day streak');if(best>=30)earned.push('30-day streak');if(pct===100)earned.push('Goal achieved');
+ const historicChecks=(t.history||[]).reduce((n,h)=>n+(h.done||[]).length,0),allTimeChecks=new Set([...(t.history||[]).flatMap(h=>h.done||[]),...(t.done||[])]).size;const earned=[];if(count>=7)earned.push('7 check-ins');if(count>=30)earned.push('30 check-ins');if(best>=7)earned.push('7-day streak');if(best>=30)earned.push('30-day streak');if(pct===100)earned.push('Goal achieved');
  return `<article class="task ${pinned?'pinned':''} ${paused?'paused':''} ${archived?'archived':''}" data-card="${t.id}" style="--task-accent:${accent}">
  <div class="tasktop"><div><div class="taskname">${esc(t.name)}${pinned?'<span class="pinmark">📌 PINNED</span>':''}${paused?'<span class="taskbadge">PAUSED</span>':''}${archived?'<span class="taskbadge">ARCHIVED</span>':''}</div><div class="taskmeta">${hasStarted?t.days+' day goal · '+t.start+' → '+end:'No streak started yet'}</div><span class="taskbadge">${esc(t.category||'Other')}</span>${earned.map(x=>`<span class="achievement">🏅 ${x}</span>`).join('')}${(t.history||[]).length?`<span class="taskbadge">${t.history.length} previous streak${t.history.length===1?'':'s'} saved</span>`:''}</div>
  <div class="taskactions"><div class="tasktools">${!isArchived?`<button class="iconbtn" data-move="${t.id}" data-direction="up" title="Move up" ${!previous||!!previous.pinned!==pinned?'disabled':''}>↑</button><button class="iconbtn" data-move="${t.id}" data-direction="down" title="Move down" ${!next||!!next.pinned!==pinned?'disabled':''}>↓</button><button class="iconbtn" data-pin="${t.id}" title="${pinned?'Unpin':'Pin'}">${pinned?'📌':'♧'}</button>`:''}</div><button class="iconbtn" data-edit="${t.id}" aria-label="Edit task">✎</button><button class="iconbtn" data-delete="${t.id}" aria-label="Delete task">×</button></div></div>
- <div class="stats"><div class="stat"><b>${count+historicChecks}</b><span>All-time check-ins</span></div><div class="stat"><b>${st} 🔥</b><span>Current streak</span></div><div class="stat"><b>${best}</b><span>Longest streak</span></div></div>
+ <div class="stats"><div class="stat"><b>${allTimeChecks}</b><span>All-time check-ins</span></div><div class="stat"><b>${st} 🔥</b><span>Current streak</span></div><div class="stat"><b>${best}</b><span>Longest streak</span></div></div>
  <div class="stats" style="margin-top:-8px"><div class="stat" style="grid-column:span 2"><b>${!hasStarted?'Not started':left===0?"Goal achieved 🎉":left+" days"}</b><span>${!hasStarted?'Choose a calendar date':left===0?"Challenge completed":"Days remaining"}</span></div><div class="stat"><b>${pct}%</b><span>Complete</span></div></div>
  <div class="progresshead"><span>Goal progress</span><b>${pct}%</b></div><div class="bar"><i style="width:${pct}%;background:${accent}"></i></div>
  <div class="calhead"><strong>${view.toLocaleString(undefined,{month:'long',year:'numeric'})}</strong><div class="monthnav"><button class="ghost" data-month="${t.id}" data-step="-1">‹</button><button class="ghost" data-month="${t.id}" data-step="1">›</button></div></div>
@@ -305,6 +340,31 @@ function openStreakDialog(taskId,date){
  if(![7,21,30,60,90,365].includes(initial)){ $('#streakCustomLength').value=initial; }
  $('#streakDialog').showModal();
 }
+let completedStreakTaskId=null;
+function isFinalStreakDay(t,date){
+ if(!t||!t.start||!Number(t.days)||date!==addDays(t.start,Number(t.days)-1))return false;
+ const completed=new Set((t.done||[]).filter(d=>d>=t.start&&d<=date));
+ return completed.size>=Number(t.days);
+}
+function celebrateStreakCompletion(t,date){
+ if(!isFinalStreakDay(t,date))return;
+ completedStreakTaskId=t.id;
+ $('#streakCompleteTitle').textContent='You did it!';
+ $('#streakCompleteMessage').textContent=`You completed ${t.days} days of “${t.name}”. Every day counted. Want to keep the momentum going for another ${t.days} days?`;
+ $('#celebrationExtend').textContent=`Extend by ${t.days} days`;
+ $('#streakCompleteDialog').showModal();
+}
+$('#celebrationDone').onclick=()=>{$('#streakCompleteDialog').close();completedStreakTaskId=null};
+$('#celebrationExtend').onclick=()=>{
+ const t=tasks.find(x=>x.id===completedStreakTaskId);
+ if(!t){$('#streakCompleteDialog').close();return}
+ const extension=Number(t.days);
+ t.days=Number(t.days)+extension;
+ completedStreakTaskId=null;
+ $('#streakCompleteDialog').close();
+ save();
+ toast(`Streak extended by ${extension} days!`);
+};
 function setStreakLength(days){
  $('#streakLength').value=days||'';
  document.querySelectorAll('.streak-preset').forEach(b=>b.classList.toggle('selected',Number(b.dataset.days)===Number(days)));
@@ -329,10 +389,11 @@ $('#streakForm').onsubmit=e=>{
  t.start=date;t.days=days;t.done=[date];t.paused=false;delete t.pausedAt;
  $('#streakDialog').close();pendingStreak={taskId:null,date:null};save();
  toast('New streak started!');
+ if(days===1)celebrateStreakCompletion(t,date);
 };
 $('#taskForm').onsubmit=async e=>{e.preventDefault();const name=$('#taskName').value.trim(),category=$('#taskCategory').value,color=$('#taskColor').value;if(!name)return;if(editing){const t=tasks.find(x=>x.id===editing);t.name=name;t.category=category;t.color=color}
  else tasks.unshift({id:crypto.randomUUID(),name,category,color,days:0,start:'',done:[],history:[],notes:{}});$('#taskDialog').close();save()};
-$('#bulkComplete').onclick=()=>{const d=todayISO(),changes=[];tasks.forEach(t=>{if(!t.archived&&!t.paused&&d>=t.start&&d<=addDays(t.start,t.days-1)&&!t.done.includes(d)){changes.push({taskId:t.id,date:d,wasDone:false});t.done.push(d)}});if(changes.length){setUndo(changes,'Mark all today');save();toast(`Marked today complete for ${changes.length} task${changes.length===1?'':'s'}! ✨`)}};
+$('#bulkComplete').onclick=()=>{const d=todayISO(),changes=[];tasks.forEach(t=>{if(!t.archived&&!t.paused&&d>=t.start&&d<=addDays(t.start,t.days-1)&&!t.done.includes(d)){changes.push({taskId:t.id,date:d,wasDone:false});t.done.push(d)}});if(changes.length){setUndo(changes,'Mark all today');save();toast(`Marked today complete for ${changes.length} task${changes.length===1?'':'s'}! ✨`);const finished=changes.map(c=>tasks.find(t=>t.id===c.taskId)).find(t=>t&&isFinalStreakDay(t,d));if(finished)celebrateStreakCompletion(finished,d)}};
 $('#taskList').addEventListener('click',e=>{
  const b=e.target.closest('button');if(!b)return;
  if(b.dataset.pin){const t=tasks.find(x=>x.id===b.dataset.pin);t.pinned=!t.pinned;save();return}
@@ -347,7 +408,7 @@ $('#taskList').addEventListener('click',e=>{
    const continuesStreak=hasActivePlan&&(t.done||[]).includes(previousDate);
    if(continuesStreak){
     setUndo([{taskId:t.id,date:d,wasDone:false}],'Mark day');
-    t.done=t.done||[];t.done.push(d);save();toast('Day checked off!');
+    t.done=t.done||[];t.done.push(d);save();toast('Day checked off!');celebrateStreakCompletion(t,d);
    }else{
     openStreakDialog(t.id,d);
    }

@@ -5,7 +5,7 @@
 - Create habits without choosing a start date or duration; select a calendar date to begin a streak and choose a duration from 7, 21, 30, 60, 90, or 365 days, or enter a custom number
 - Start a new streak from another uncompleted calendar date while preserving previous streak history
 - Consecutive dates within an active streak are checked off directly; the streak-length prompt appears only when starting a genuinely new streak
-- Current and longest streaks, goal progress, days remaining, and yearly consistency heatmap
+- Current and longest streaks, goal progress, days remaining, and yearly consistency heatmap (counts distinct completed calendar dates, including saved previous streaks)
 - Daily progress dashboard with completion ring
 - Weekly overview showing daily completed habits
 - Habit statistics, including all-time check-ins, active habits, and average goal progress
@@ -15,8 +15,8 @@
 - Habit categories, category filtering, and search
 - Archive and restore habits without losing completion history
 - Pause and resume habits without deleting progress
-- Custom per-habit colours, applied consistently to calendar completions, today's date outline, progress indicators, and the yearly heatmap
 - Milestone achievement badges
+- Animated celebration when the final day of a fully completed streak is checked off, with an option to extend using the existing streak-duration presets or a custom duration
 - Daily notes attached to a habit and date
 - Focus mode for one habit at a time
 - Export and import JSON backups of habits, notes, categories, and progress
