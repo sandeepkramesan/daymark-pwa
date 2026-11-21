@@ -18,10 +18,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:24p
 button.primary{background:var(--accent);color:#161a10;border:0;border-radius:13px;padding:12px 16px;font-weight:750}button.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:9px 12px}
 .intro{padding:20px 0 22px}.eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase}.intro h1{font-size:clamp(28px,6vw,42px);line-height:1.05;letter-spacing:-1.6px;margin:8px 0}.intro p{color:var(--muted);margin:8px 0 0}
 .tasklist{display:grid;gap:14px}.empty{border:1px dashed #454a54;border-radius:18px;padding:32px 22px;text-align:center;color:var(--muted)}.empty b{display:block;color:var(--text);font-size:18px;margin-bottom:5px}
-.task{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:17px;overflow:hidden}.tasktop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.taskname{font-size:19px;font-weight:750;letter-spacing:-.4px;overflow-wrap:anywhere}.taskmeta{font-size:12px;color:var(--muted);margin-top:4px}.taskactions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.tasktools{display:flex;gap:5px}.tasktools .iconbtn{font-size:14px}.task.pinned{border-color:var(--accent)}.pinmark{color:var(--accent);font-size:11px;margin-left:6px}.bulkbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 12px;padding:11px 12px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}.bulkbar span{font-size:12px;color:var(--muted)}.bulkbar button{white-space:nowrap;font-size:12px;padding:9px 11px}.iconbtn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--muted)}
+.task{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:17px;overflow:hidden}.tasktop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.taskname{font-size:19px;font-weight:750;letter-spacing:-.4px;overflow-wrap:anywhere}.taskmeta{font-size:12px;color:var(--muted);margin-top:4px}.taskactions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.tasktools{display:flex;gap:5px}.tasktools .iconbtn{font-size:14px}.tasktop>div:first-child{min-width:0;flex:1}.taskmeta{overflow-wrap:anywhere}.taskactions,.tasktools{flex-wrap:nowrap;flex-shrink:0}.task.pinned{border-color:var(--accent)}.pinmark{color:var(--accent);font-size:11px;margin-left:6px}.bulkbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 12px;padding:11px 12px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}.bulkbar span{font-size:12px;color:var(--muted)}.bulkbar button{white-space:nowrap;font-size:12px;padding:9px 11px}.iconbtn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--muted)}
 .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:16px 0}.stat{background:var(--panel2);border-radius:12px;padding:10px}.stat b{display:block;font-size:20px;letter-spacing:-.6px}.stat span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
 .progresshead{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:7px}.bar{height:7px;border-radius:9px;background:#343842;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent);border-radius:9px}
-.calhead{display:flex;justify-content:space-between;align-items:center;margin:19px 0 10px}.calhead strong{font-size:13px}.monthnav{display:flex;gap:6px}.monthnav button{width:30px;height:30px;padding:0}.week,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.week span{text-align:center;color:#858b97;font-size:10px;padding:4px 0}.day{aspect-ratio:1;border-radius:10px;background:#23262d;border:1px solid transparent;color:#dce0e7;display:grid;place-items:center;position:relative;font-size:12px;padding:0}.day.blank{background:transparent}.day.out{opacity:.28}.day.done{background:var(--accent);color:#17200d;font-weight:850}.task .day.done{background:var(--task-accent,var(--accent))}.day.today{border-color:var(--accent)}.day:disabled{cursor:default;opacity:.4}.legend{display:flex;gap:14px;color:var(--muted);font-size:11px;margin-top:12px}.dot{display:inline-block;width:8px;height:8px;border-radius:3px;margin-right:5px;background:var(--accent)}.dot.pending{background:#343842}
+.calhead{display:flex;justify-content:space-between;align-items:center;margin:19px 0 10px}.calhead strong{font-size:13px}.monthnav{display:flex;gap:6px}.monthnav button{width:30px;height:30px;padding:0}.week,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.week span{text-align:center;color:#858b97;font-size:10px;padding:4px 0}.day{aspect-ratio:1;border-radius:10px;background:#23262d;border:1px solid transparent;color:#dce0e7;display:grid;place-items:center;position:relative;font-size:12px;padding:0}.day.blank{background:transparent}.day.out{opacity:.28}.day.done{background:var(--accent);color:#17200d;font-weight:850}.task .day.done{background:var(--task-accent,var(--accent))}.day.today{border-color:var(--accent)}.task .day.today{border-color:var(--task-accent,var(--accent))}.day:disabled{cursor:default;opacity:.4}.legend{display:flex;gap:14px;color:var(--muted);font-size:11px;margin-top:12px}.dot{display:inline-block;width:8px;height:8px;border-radius:3px;margin-right:5px;background:var(--accent)}.dot.pending{background:#343842}
 .heatwrap{margin-top:17px;padding-top:13px;border-top:1px solid var(--line)}.heat{display:grid;grid-template-columns:repeat(13,1fr);grid-template-rows:repeat(29,7px);grid-auto-flow:column;gap:3px;margin-top:9px}.heatcell{background:var(--panel2);border-radius:2px}.heatcell.active{background:var(--accent)}.task .heatcell.active{background:var(--task-accent,var(--accent))}.heatlabel{font-size:11px;color:var(--muted)}.day.pop{animation:pop .35s ease}@keyframes pop{50%{transform:scale(1.18)}}
 .note{font-size:11px;color:var(--muted);margin-top:12px}
 dialog{border:1px solid var(--line);border-radius:20px;background:var(--panel);color:var(--text);width:min(440px,calc(100% - 28px));padding:22px;box-shadow:0 20px 80px #0009}dialog::backdrop{background:#000a}dialog h2{margin:0 0 16px;font-size:22px}.field{display:grid;gap:6px;margin:13px 0}.field label{font-size:12px;color:var(--muted)}.field input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:12px;color:var(--text)}.formactions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.danger{color:var(--red)!important}
@@ -88,6 +88,11 @@ body.focus-mode .focus-exit{display:block}
 
 footer{text-align:center;color:#777e8a;font-size:11px;padding:24px 0 10px}
 @media(min-width:620px){.app{padding-left:26px;padding-right:26px}.task{padding:21px}.day{border-radius:12px;font-size:13px}}
+
+.streak-presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.streak-preset{min-height:42px;border:1px solid var(--line);border-radius:11px;background:var(--panel2);color:var(--text);font-weight:650;padding:8px 5px}
+.streak-preset.selected{border-color:var(--accent);background:var(--accent);color:#151515}
+@media(max-width:520px){.tasktop{display:flex;flex-direction:column;align-items:stretch;gap:9px}.taskactions{width:100%;justify-content:flex-start;gap:5px}.tasktools{gap:5px}.taskactions .iconbtn{flex:0 0 34px}.taskmeta{max-width:100%}}
 </style>
 </head>
 <body>
@@ -127,7 +132,7 @@ footer{text-align:center;color:#777e8a;font-size:11px;padding:24px 0 10px}
 <div class="field"><label for="taskColor">Habit colour</label><select id="taskColor"><option value="">Use theme colour</option><option value="#c6f36a">Lime</option><option value="#79d8df">Ocean</option><option value="#c3a5ff">Violet</option><option value="#ffadad">Coral</option><option value="#ffc66d">Amber</option><option value="#91d6a8">Mint</option></select></div><div class="formactions"><button type="button" class="ghost" id="cancelBtn">Cancel</button><button class="primary" type="submit">Save task</button></div>
 </form>
 </dialog>
-<dialog id="streakDialog"><form id="streakForm"><h2>Start a new streak</h2><p class="restart-copy" id="streakPromptDate">Selected date</p><div class="field"><label for="streakLength">How long do you want this streak to be?</label><input id="streakLength" type="number" min="1" max="3660" value="30" required></div><div class="formactions"><button type="button" class="ghost" id="streakCancel">Cancel</button><button class="primary" type="submit">Start streak</button></div></form></dialog>
+<dialog id="streakDialog"><form id="streakForm"><h2>Start a new streak</h2><p class="restart-copy" id="streakPromptDate">Selected date</p><div class="field"><label>Choose a streak length</label><div class="streak-presets" role="group" aria-label="Streak length presets"><button type="button" class="streak-preset" data-days="7">7 days</button><button type="button" class="streak-preset" data-days="21">21 days</button><button type="button" class="streak-preset selected" data-days="30">30 days</button><button type="button" class="streak-preset" data-days="60">60 days</button><button type="button" class="streak-preset" data-days="90">90 days</button><button type="button" class="streak-preset" data-days="365">365 days</button></div></div><div class="field"><label for="streakCustomLength">Custom number of days</label><input id="streakCustomLength" type="number" min="1" max="3660" placeholder="Enter a custom duration"></div><input id="streakLength" type="hidden" value="30"><div class="formactions"><button type="button" class="ghost" id="streakCancel">Cancel</button><button class="primary" type="submit">Start streak</button></div></form></dialog>
 <dialog id="noteDialog"><form id="noteForm"><h2>Daily note</h2><div class="field"><label for="noteDate">Date</label><input id="noteDate" type="date" required></div><div class="field"><label for="noteText">What would you like to remember?</label><textarea id="noteText" rows="4" maxlength="500" placeholder="A quick reflection, detail or win…"></textarea></div><div class="formactions"><button type="button" class="ghost" id="noteCancel">Cancel</button><button class="primary" type="submit">Save note</button></div></form></dialog>
 <dialog id="restartDialog">
   <form id="restartForm">
@@ -294,9 +299,24 @@ function openStreakDialog(taskId,date){
  const d=dateObj(date);
  $('#streakPromptDate').textContent='Starting date: '+d.toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long',year:'numeric'});
  const t=tasks.find(x=>x.id===taskId);
- $('#streakLength').value=t?.days>0?t.days:30;
+ const initial=t?.days>0?Number(t.days):30;
+ $('#streakCustomLength').value='';
+ setStreakLength([7,21,30,60,90,365].includes(initial)?initial:null);
+ if(![7,21,30,60,90,365].includes(initial)){ $('#streakCustomLength').value=initial; }
  $('#streakDialog').showModal();
 }
+function setStreakLength(days){
+ $('#streakLength').value=days||'';
+ document.querySelectorAll('.streak-preset').forEach(b=>b.classList.toggle('selected',Number(b.dataset.days)===Number(days)));
+}
+document.querySelectorAll('.streak-preset').forEach(b=>b.onclick=()=>{
+ $('#streakCustomLength').value='';
+ setStreakLength(Number(b.dataset.days));
+});
+$('#streakCustomLength').oninput=()=>{
+ const n=Number($('#streakCustomLength').value);
+ setStreakLength(n>=1&&n<=3660?n:null);
+};
 $('#streakCancel').onclick=()=>{$('#streakDialog').close();pendingStreak={taskId:null,date:null}};
 $('#streakForm').onsubmit=e=>{
  e.preventDefault();
