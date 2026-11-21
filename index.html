@@ -337,7 +337,22 @@ $('#taskList').addEventListener('click',e=>{
  const b=e.target.closest('button');if(!b)return;
  if(b.dataset.pin){const t=tasks.find(x=>x.id===b.dataset.pin);t.pinned=!t.pinned;save();return}
  if(b.dataset.move){const list=orderedTasks(),i=list.findIndex(x=>x.id===b.dataset.move),j=i+(b.dataset.direction==='up'?-1:1);if(j>=0&&j<list.length){[list[i],list[j]]=[list[j],list[i]];list.forEach((t,n)=>t.order=n);tasks=list;save()}return}
- if(b.dataset.date){const t=tasks.find(x=>x.id===b.dataset.task),d=b.dataset.date;if((t.done||[]).includes(d)){setUndo([{taskId:t.id,date:d,wasDone:true}],'Unmark day');t.done=t.done.filter(x=>x!==d);save()}else{openStreakDialog(t.id,d)}}
+ if(b.dataset.date){
+  const t=tasks.find(x=>x.id===b.dataset.task),d=b.dataset.date;
+  if((t.done||[]).includes(d)){
+   setUndo([{taskId:t.id,date:d,wasDone:true}],'Unmark day');t.done=t.done.filter(x=>x!==d);save();
+  }else{
+   const hasActivePlan=!!t.start&&Number(t.days)>0&&d>=t.start&&d<=addDays(t.start,t.days-1);
+   const previousDate=addDays(d,-1);
+   const continuesStreak=hasActivePlan&&(t.done||[]).includes(previousDate);
+   if(continuesStreak){
+    setUndo([{taskId:t.id,date:d,wasDone:false}],'Mark day');
+    t.done=t.done||[];t.done.push(d);save();toast('Day checked off!');
+   }else{
+    openStreakDialog(t.id,d);
+   }
+  }
+ }
  if(b.dataset.month){monthOffsets[b.dataset.month]=(monthOffsets[b.dataset.month]||0)+Number(b.dataset.step);render()}
  if(b.dataset.edit)openDialog(tasks.find(x=>x.id===b.dataset.edit));
  if(b.dataset.delete){const t=tasks.find(x=>x.id===b.dataset.delete);if(confirm(`Delete “${t.name}” and its progress?`)){tasks=tasks.filter(x=>x.id!==t.id);save()}}

@@ -4,6 +4,7 @@
 - Multiple habits with individual calendars, date check-offs and undo
 - Create habits without choosing a start date or duration; select a calendar date to begin a streak and choose a duration from 7, 21, 30, 60, 90, or 365 days, or enter a custom number
 - Start a new streak from another uncompleted calendar date while preserving previous streak history
+- Consecutive dates within an active streak are checked off directly; the streak-length prompt appears only when starting a genuinely new streak
 - Current and longest streaks, goal progress, days remaining, and yearly consistency heatmap
 - Daily progress dashboard with completion ring
 - Weekly overview showing daily completed habits
