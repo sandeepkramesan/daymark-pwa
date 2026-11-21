@@ -58,3 +58,9 @@ Daily reminder scheduling has been removed because browser-based reminders are n
 - Selecting another uncompleted date later starts a new streak and archives the previous streak's dates and duration.
 - Previous streak check-ins remain included in all-time check-ins, yearly heatmap and longest-streak calculations.
 - Existing local storage key `daymark-tasks-v2` is preserved; legacy habits remain readable.
+
+
+## v13 fixes
+- Keeps the start date and goal duration hidden until the first date is selected to begin a streak.
+- Applies each habit's selected colour consistently to completed calendar dates, progress indicators, and the yearly consistency heatmap.
+- Keeps the Android app name set to `daymark`. If an already-installed shortcut still shows the previous long label on its splash screen, uninstall and reinstall the PWA from the updated site; do not clear the browser's site data.
