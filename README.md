@@ -18,6 +18,12 @@ A single-file, offline-capable habit tracker PWA. No account or server; data sta
 ## Deploying
 Host all files on HTTPS (e.g. GitHub Pages) and replace the old files. Pages load network-first, so a normal reopen picks up the new version. **Bump `CACHE` in `sw.js` on every release.**
 
+## v26 changes
+Logo unified: the header tick is now a vector shape used identically in the header, in-app splash and the PWA/launcher/Android splash icons.
+
+## v25 changes
+Fixed: undo now persists (and restores into the right streak); weekly overview counts check-ins from earlier streaks; pausing a habit no longer breaks its streak on resume.
+
 ## v24 changes
 Fixed: "Mark all today" corrupting habits with no streak; permanent splash when saved data is unreadable (a copy is kept under `daymark-corrupt-backup`); calendar opening on the streak's start month; current streak showing 0 until today is checked; unable to uncheck the last day of an older streak; unsafe backup import; focus-mode blank screens; midnight rollover; light theme colours; stale service worker caching. Past check-ins are no longer duplicated into every history entry. Removed dead restart-dialog code and unused icons. Larger tap targets; "task" wording now "habit".
 

@@ -14,7 +14,7 @@
 :root[data-theme="light"]{color-scheme:light;--bg:#f4f5ef;--panel:#fff;--panel2:#eff1e9;--line:#dfe2d7;--muted:#747b6c;--text:#20231b;--accent:#668b29;--cell:#e6e9dd;--track:#d5d9ca}:root[data-theme="violet"]{--accent:#c3a5ff}:root[data-theme="ocean"]{--accent:#79d8df}
 *{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
 button,input{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;padding:env(safe-area-inset-top) max(18px,env(safe-area-inset-left)) calc(28px + env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-right))}
-header{display:flex;align-items:center;justify-content:space-between;padding:24px 0 18px} .brand{display:flex;gap:11px;align-items:center}.mark{width:38px;height:38px;border-radius:12px;background:var(--accent);color:#151711;display:grid;place-items:center;font-weight:900;font-size:20px}.brand strong{font-size:18px;letter-spacing:-.4px}.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+header{display:flex;align-items:center;justify-content:space-between;padding:24px 0 18px} .brand{display:flex;gap:11px;align-items:center}.mark{width:38px;height:38px;border-radius:12px;background:var(--accent);color:#151711;display:grid;place-items:center}.tick{width:100%;height:100%;fill:currentColor;display:block}.brand strong{font-size:18px;letter-spacing:-.4px}.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
 button.primary{background:var(--accent);color:#161a10;border:0;border-radius:13px;padding:12px 16px;font-weight:750}button.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:9px 12px}
 .intro{padding:20px 0 22px}.eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase}.intro h1{font-size:clamp(28px,6vw,42px);line-height:1.05;letter-spacing:-1.6px;margin:8px 0}.intro p{color:var(--muted);margin:8px 0 0}
 .tasklist{display:grid;gap:14px}.empty{border:1px dashed var(--line);border-radius:18px;padding:32px 22px;text-align:center;color:var(--muted)}.empty b{display:block;color:var(--text);font-size:18px;margin-bottom:5px}
@@ -29,7 +29,7 @@ dialog{border:1px solid var(--line);border-radius:20px;background:var(--panel);c
 
 #splash{position:fixed;inset:0;z-index:9999;background:#101114;display:grid;place-items:center;opacity:1;visibility:visible;transition:opacity .35s ease,visibility .35s ease}
 #splash.hide{opacity:0;visibility:hidden;pointer-events:none}
-.splash-logo{width:88px;height:88px;border-radius:25px;background:#c6f36a;color:#161a10;display:grid;place-items:center;font-size:54px;font-weight:900;line-height:1;box-shadow:0 12px 45px #0005}
+.splash-logo{width:88px;height:88px;border-radius:28px;background:#c6f36a;color:#151711;display:grid;place-items:center;box-shadow:0 12px 45px #0005}
 @media(prefers-reduced-motion:reduce){#splash{transition:none}}
 
 .dashboard{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 14px;align-items:stretch}
@@ -118,9 +118,9 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:24px 0 10px}
 </style>
 </head>
 <body>
-<div id="splash" aria-label="Daymark"><div class="splash-logo">✓</div></div>
+<div id="splash" aria-label="Daymark"><div class="splash-logo"><svg class="tick" viewBox="0 0 100 100" aria-hidden="true"><path d="M35.39 68.47 L36.31 69.03 L37.50 69.47 L38.20 69.59 L39.04 69.54 L40.17 69.17 L41.01 68.73 L41.85 68.08 L42.91 66.99 L44.66 64.54 L49.67 56.04 L56.92 45.93 L62.66 38.48 L67.70 32.94 L69.24 31.04 L69.76 29.99 L69.89 29.00 L69.73 28.34 L69.17 27.53 L68.82 27.32 L68.12 27.25 L65.66 27.91 L63.55 28.10 L62.71 28.30 L61.99 28.65 L61.24 29.20 L58.48 31.60 L56.90 33.29 L53.79 37.24 L50.21 41.99 L46.75 46.98 L45.08 48.62 L42.70 53.51 L41.92 54.73 L41.22 55.39 L40.59 55.53 L40.03 55.22 L39.61 54.42 L39.12 52.91 L38.62 52.01 L37.90 51.19 L36.94 50.66 L35.96 50.56 L34.48 50.86 L31.32 52.33 L30.69 52.81 L30.31 53.51 L30.24 54.49 L30.97 58.29 L31.39 59.90 L32.49 62.99 L33.71 65.87 L34.62 67.53Z"/></svg></div></div>
 <div class="app">
-<header><div class="brand"><div class="mark">✓</div><div><strong>daymark</strong><small>show up daily</small></div></div><button class="primary" id="addBtn">＋ New habit</button></header>
+<header><div class="brand"><div class="mark"><svg class="tick" viewBox="0 0 100 100" aria-hidden="true"><path d="M35.39 68.47 L36.31 69.03 L37.50 69.47 L38.20 69.59 L39.04 69.54 L40.17 69.17 L41.01 68.73 L41.85 68.08 L42.91 66.99 L44.66 64.54 L49.67 56.04 L56.92 45.93 L62.66 38.48 L67.70 32.94 L69.24 31.04 L69.76 29.99 L69.89 29.00 L69.73 28.34 L69.17 27.53 L68.82 27.32 L68.12 27.25 L65.66 27.91 L63.55 28.10 L62.71 28.30 L61.99 28.65 L61.24 29.20 L58.48 31.60 L56.90 33.29 L53.79 37.24 L50.21 41.99 L46.75 46.98 L45.08 48.62 L42.70 53.51 L41.92 54.73 L41.22 55.39 L40.59 55.53 L40.03 55.22 L39.61 54.42 L39.12 52.91 L38.62 52.01 L37.90 51.19 L36.94 50.66 L35.96 50.56 L34.48 50.86 L31.32 52.33 L30.69 52.81 L30.31 53.51 L30.24 54.49 L30.97 58.29 L31.39 59.90 L32.49 62.99 L33.71 65.87 L34.62 67.53Z"/></svg></div><div><strong>daymark</strong><small>show up daily</small></div></div><button class="primary" id="addBtn">＋ New habit</button></header>
 <section class="intro"><div class="eyebrow">Small steps. Real progress.</div><h1>Make every day<br>count.</h1><p>Set a goal, mark each day you show up, and watch your streak grow.</p></section>
 <section class="dashboard" id="dashboard">
   <div class="dashcard">
@@ -185,6 +185,7 @@ function normTask(t){
  if(t.notes&&typeof t.notes==='object')for(const k of Object.keys(t.notes))if(validDate(k)&&typeof t.notes[k]==='string')out.notes[k]=t.notes[k].slice(0,500);
  ['paused','archived','pinned'].forEach(k=>{if(t[k])out[k]=true});
  if(out.paused&&validDate(t.pausedAt))out.pausedAt=t.pausedAt;
+ out.pauses=(Array.isArray(t.pauses)?t.pauses:[]).filter(r=>r&&validDate(r.from)&&validDate(r.to)&&r.from<=r.to).map(r=>({from:r.from,to:r.to}));
  if(Number.isFinite(t.order))out.order=t.order;
  if(start){const end=addDays(start,days-1),inH=new Set(out.history.flatMap(h=>h.done));out.done=out.done.filter(d=>(d>=start&&d<=end)||!inH.has(d))}
  return out;
@@ -206,9 +207,11 @@ function addDays(s,n){const d=dateObj(s);d.setDate(d.getDate()+n);return iso(d)}
 function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function inWin(t,d){return !!t.start&&Number(t.days)>0&&d>=t.start&&d<=addDays(t.start,Number(t.days)-1)}
 function completedSet(t){return new Set([...(t.done||[]),...(t.history||[]).flatMap(h=>h.done||[])])}
-function canContinue(t,d){return inWin(t,d)&&!(t.done||[]).includes(d)&&completedSet(t).has(addDays(d,-1))}
-function streak(t){if(!inWin(t,t.start))return 0;const end=addDays(t.start,Number(t.days)-1),done=new Set(t.done||[]);let c=todayISO();if(c>end)c=end;else if(!done.has(c))c=addDays(c,-1);let n=0;while(c>=t.start&&done.has(c)){n++;c=addDays(c,-1)}return n}
-function longest(t){let best=0;const groups=[...(t.history||[]),{start:t.start,days:t.days,done:t.done||[]}];for(const g of groups){if(!g.start||!Number(g.days))continue;let run=0,prev='';for(const d of [...new Set(g.done||[])].filter(x=>x>=g.start&&x<=addDays(g.start,g.days-1)).sort()){run=prev&&addDays(prev,1)===d?run+1:1;best=Math.max(best,run);prev=d}}return best}
+function isPaused(t,d){return (t.pauses||[]).some(r=>d>=r.from&&d<=r.to)||!!(t.paused&&t.pausedAt&&d>=t.pausedAt)}
+function prevActive(t,d){let p=addDays(d,-1),n=0;while(isPaused(t,p)&&n++<3700)p=addDays(p,-1);return p}
+function canContinue(t,d){return inWin(t,d)&&!(t.done||[]).includes(d)&&completedSet(t).has(prevActive(t,d))}
+function streak(t){if(!inWin(t,t.start))return 0;const end=addDays(t.start,Number(t.days)-1),done=new Set(t.done||[]);let c=todayISO();if(c>end)c=end;else if(!done.has(c))c=prevActive(t,c);let n=0;while(c>=t.start&&done.has(c)){n++;c=prevActive(t,c)}return n}
+function longest(t){let best=0;const groups=[...(t.history||[]),{start:t.start,days:t.days,done:t.done||[]}];for(const g of groups){if(!g.start||!Number(g.days))continue;let run=0,prev='';for(const d of [...new Set(g.done||[])].filter(x=>x>=g.start&&x<=addDays(g.start,g.days-1)).sort()){run=prev&&prevActive(t,d)===prev?run+1:1;best=Math.max(best,run);prev=d}}return best}
 function heatmap(t){const y=new Date().getFullYear(),all=[...new Set([...(t.history||[]).flatMap(h=>h.done||[]),...(t.done||[])])];let cells='';for(let i=0;i<365+(new Date(y,1,29).getMonth()===1?1:0);i++){const d=iso(new Date(y,0,i+1));cells+=`<div class="heatcell ${all.includes(d)?'active':''}" title="${d}"></div>`}return `<div class="heatwrap"><div class="heatlabel"><b>${y} consistency heatmap</b> · ${all.filter(d=>d.startsWith(String(y))).length} completed days</div><div class="heat">${cells}</div></div>`}
 function orderedTasks(){return tasks.filter(t=>!t.archived).sort((a,b)=>(Number(!!b.pinned)-Number(!!a.pinned))||((a.order??tasks.indexOf(a))-(b.order??tasks.indexOf(b))))}
 
@@ -224,11 +227,14 @@ function undoLast(){
  for(const change of undoAction.changes){
   const t=tasks.find(x=>x.id===change.taskId);if(!t)continue;
   t.done=t.done||[];
-  const exists=t.done.includes(change.date);
-  if(change.wasDone&&!exists){t.done.push(change.date);restored++}
-  else if(!change.wasDone&&exists){t.done=t.done.filter(d=>d!==change.date);restored++}
+  const exists=completedSet(t).has(change.date);
+  if(change.wasDone&&!exists){
+   const h=(t.history||[]).find(h=>h.start&&Number(h.days)>0&&change.date>=h.start&&change.date<=addDays(h.start,Number(h.days)-1));
+   if(h&&!inWin(t,change.date)){h.done=h.done||[];h.done.push(change.date)}else t.done.push(change.date);
+   restored++}
+  else if(!change.wasDone&&exists){t.done=t.done.filter(d=>d!==change.date);(t.history||[]).forEach(h=>{h.done=(h.done||[]).filter(d=>d!==change.date)});restored++}
  }
- undoAction=null;persistUndo();render();
+ undoAction=null;persistUndo();save();
  if(restored)toast(`Undid ${restored} check-off${restored===1?'':'s'}.`);
 }
 function renderDashboard(){
@@ -253,8 +259,8 @@ function renderDashboard(){
  const labels=['S','M','T','W','T','F','S'];
  for(let i=0;i<7;i++){
   const d=new Date(monday);d.setDate(monday.getDate()+i);const key=iso(d);
-  const due=tasks.filter(t=>!t.archived&&!t.paused&&inWin(t,key));
-  const done=due.filter(t=>(t.done||[]).includes(key)).length;
+  const due=tasks.filter(t=>!t.archived&&((inWin(t,key)&&!isPaused(t,key))||completedSet(t).has(key)));
+  const done=due.filter(t=>completedSet(t).has(key)).length;
   total+=done;const ratio=due.length?Math.round(done/due.length*100):0;
   strip+=`<div class="weekday ${key===today?'today':''}" title="${key}: ${done}/${due.length} habits"><div class="wd">${labels[i]}</div><div class="wdnum">${d.getDate()}</div><div class="dashmuted">${done}/${due.length}</div><div class="wdbar"><i style="width:${ratio}%"></i></div></div>`;
  }
@@ -398,7 +404,7 @@ $('#taskList').addEventListener('click',e=>{
   const history=t.history=Array.isArray(t.history)?t.history:[];
   const completed=new Set([...(t.done||[]),...history.flatMap(h=>Array.isArray(h.done)?h.done:[])]);
   const wasCompleted=completed.has(d);
-  const previousCompleted=completed.has(addDays(d,-1));
+  const previousCompleted=completed.has(prevActive(t,d));
   const nextCompleted=completed.has(addDays(d,1));
   const removeCompletion=()=>{
     t.done=(t.done||[]).filter(x=>x!==d);
@@ -444,7 +450,7 @@ $('#noteForm').onsubmit=e=>{e.preventDefault();const t=tasks.find(x=>x.id===note
 $('#exitFocus').onclick=()=>{focusTaskId=null;render()};
 $('#taskList').addEventListener('click',e=>{
  const b=e.target.closest('button');if(!b)return;
- if(b.dataset.pause){const t=tasks.find(x=>x.id===b.dataset.pause);if(!t.paused){t.paused=true;t.pausedAt=todayISO()}else{const from=dateObj(t.pausedAt||todayISO()),to=dateObj(todayISO()),gap=Math.max(0,Math.round((to-from)/86400000));t.days+=gap;t.paused=false;delete t.pausedAt}save();return}
+ if(b.dataset.pause){const t=tasks.find(x=>x.id===b.dataset.pause);if(!t.paused){t.paused=true;t.pausedAt=todayISO()}else{const from=dateObj(t.pausedAt||todayISO()),to=dateObj(todayISO()),gap=Math.max(0,Math.round((to-from)/86400000));t.days+=gap;const pf=t.pausedAt||todayISO(),pt=addDays(todayISO(),-1);if(pf<=pt){t.pauses=Array.isArray(t.pauses)?t.pauses:[];t.pauses.push({from:pf,to:pt})}t.paused=false;delete t.pausedAt}save();return}
  if(b.dataset.archive){const t=tasks.find(x=>x.id===b.dataset.archive);t.archived=true;t.pinned=false;archiveOpen=true;save();return}
  if(b.dataset.restore){const t=tasks.find(x=>x.id===b.dataset.restore);t.archived=false;archiveOpen=true;save();return}
  if(b.dataset.focus){focusTaskId=b.dataset.focus;render();window.scrollTo({top:0,behavior:'smooth'});return}
