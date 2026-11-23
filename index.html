@@ -6,22 +6,22 @@
 <meta name="theme-color" content="#101114">
 <meta name="description" content="A simple habit calendar with progress insights, one day at a time.">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icons/icon-192.png">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="icons/daymark-192.png">
+<link rel="apple-touch-icon" href="icons/daymark-192.png">
 <title>Daymark — Keep your streak</title>
 <style>
-:root{color-scheme:dark;--bg:#101114;--panel:#191b20;--panel2:#20232a;--line:#30343d;--muted:#9da3af;--text:#f4f5f7;--accent:#c6f36a;--red:#ff7e7e}
-:root[data-theme="light"]{color-scheme:light;--bg:#f4f5ef;--panel:#fff;--panel2:#eff1e9;--line:#dfe2d7;--muted:#747b6c;--text:#20231b;--accent:#668b29}:root[data-theme="violet"]{--accent:#c3a5ff}:root[data-theme="ocean"]{--accent:#79d8df}
+:root{color-scheme:dark;--bg:#101114;--panel:#191b20;--panel2:#20232a;--line:#30343d;--muted:#9da3af;--text:#f4f5f7;--accent:#c6f36a;--red:#ff7e7e;--cell:#23262d;--track:#343842}
+:root[data-theme="light"]{color-scheme:light;--bg:#f4f5ef;--panel:#fff;--panel2:#eff1e9;--line:#dfe2d7;--muted:#747b6c;--text:#20231b;--accent:#668b29;--cell:#e6e9dd;--track:#d5d9ca}:root[data-theme="violet"]{--accent:#c3a5ff}:root[data-theme="ocean"]{--accent:#79d8df}
 *{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-button,input{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;padding:env(safe-area-inset-top) 18px calc(28px + env(safe-area-inset-bottom))}
+button,input{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;padding:env(safe-area-inset-top) max(18px,env(safe-area-inset-left)) calc(28px + env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-right))}
 header{display:flex;align-items:center;justify-content:space-between;padding:24px 0 18px} .brand{display:flex;gap:11px;align-items:center}.mark{width:38px;height:38px;border-radius:12px;background:var(--accent);color:#151711;display:grid;place-items:center;font-weight:900;font-size:20px}.brand strong{font-size:18px;letter-spacing:-.4px}.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
 button.primary{background:var(--accent);color:#161a10;border:0;border-radius:13px;padding:12px 16px;font-weight:750}button.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:9px 12px}
 .intro{padding:20px 0 22px}.eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase}.intro h1{font-size:clamp(28px,6vw,42px);line-height:1.05;letter-spacing:-1.6px;margin:8px 0}.intro p{color:var(--muted);margin:8px 0 0}
-.tasklist{display:grid;gap:14px}.empty{border:1px dashed #454a54;border-radius:18px;padding:32px 22px;text-align:center;color:var(--muted)}.empty b{display:block;color:var(--text);font-size:18px;margin-bottom:5px}
-.task{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:17px;overflow:hidden}.tasktop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.taskname{font-size:19px;font-weight:750;letter-spacing:-.4px;overflow-wrap:anywhere}.taskmeta{font-size:12px;color:var(--muted);margin-top:4px}.taskactions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.tasktools{display:flex;gap:5px}.tasktools .iconbtn{font-size:14px}.tasktop>div:first-child{min-width:0;flex:1}.taskmeta{overflow-wrap:anywhere}.taskactions,.tasktools{flex-wrap:nowrap;flex-shrink:0}.task.pinned{border-color:var(--accent)}.pinmark{color:var(--accent);font-size:11px;margin-left:6px}.bulkbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 12px;padding:11px 12px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}.bulkbar span{font-size:12px;color:var(--muted)}.bulkbar button{white-space:nowrap;font-size:12px;padding:9px 11px}.iconbtn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--muted)}
+.tasklist{display:grid;gap:14px}.empty{border:1px dashed var(--line);border-radius:18px;padding:32px 22px;text-align:center;color:var(--muted)}.empty b{display:block;color:var(--text);font-size:18px;margin-bottom:5px}
+.task{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:17px;overflow:hidden}.tasktop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.taskname{font-size:19px;font-weight:750;letter-spacing:-.4px;overflow-wrap:anywhere}.taskmeta{font-size:12px;color:var(--muted);margin-top:4px}.taskactions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.tasktools{display:flex;gap:5px}.tasktools .iconbtn{font-size:14px}.tasktop>div:first-child{min-width:0;flex:1}.taskmeta{overflow-wrap:anywhere}.taskactions,.tasktools{flex-wrap:nowrap;flex-shrink:0}.task.pinned{border-color:var(--accent)}.pinmark{color:var(--accent);font-size:11px;margin-left:6px}.bulkbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 12px;padding:11px 12px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}.bulkbar span{font-size:12px;color:var(--muted)}.bulkbar button{white-space:nowrap;font-size:12px;padding:9px 11px}.iconbtn{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--muted)}
 .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:16px 0}.stat{background:var(--panel2);border-radius:12px;padding:10px}.stat b{display:block;font-size:20px;letter-spacing:-.6px}.stat span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-.progresshead{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:7px}.bar{height:7px;border-radius:9px;background:#343842;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent);border-radius:9px}
-.calhead{display:flex;justify-content:space-between;align-items:center;margin:19px 0 10px}.calhead strong{font-size:13px}.monthnav{display:flex;gap:6px}.monthnav button{width:30px;height:30px;padding:0}.week,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.week span{text-align:center;color:#858b97;font-size:10px;padding:4px 0}.day{aspect-ratio:1;border-radius:10px;background:#23262d;border:1px solid transparent;color:#dce0e7;display:grid;place-items:center;position:relative;font-size:12px;padding:0}.day.blank{background:transparent}.day.out{opacity:.28}.day.done{background:var(--accent);color:#17200d;font-weight:850}.task .day.done{background:var(--task-accent,var(--accent))}.day.today{border-color:var(--accent)}.task .day.today{border-color:var(--task-accent,var(--accent))}.day:disabled{cursor:default;opacity:.4}.legend{display:flex;gap:14px;color:var(--muted);font-size:11px;margin-top:12px}.dot{display:inline-block;width:8px;height:8px;border-radius:3px;margin-right:5px;background:var(--accent)}.dot.pending{background:#343842}
+.progresshead{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:7px}.bar{height:7px;border-radius:9px;background:var(--track);overflow:hidden}.bar i{display:block;height:100%;background:var(--accent);border-radius:9px}
+.calhead{display:flex;justify-content:space-between;align-items:center;margin:19px 0 10px}.calhead strong{font-size:13px}.monthnav{display:flex;gap:6px}.monthnav button{width:40px;height:38px;padding:0}.week,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.week span{text-align:center;color:var(--muted);font-size:10px;padding:4px 0}.day{aspect-ratio:1;border-radius:10px;background:var(--cell);border:1px solid transparent;color:var(--text);display:grid;place-items:center;position:relative;font-size:12px;padding:0}.day.blank{background:transparent}.day.out{opacity:.28}.day.done{background:var(--accent);color:#17200d;font-weight:850}.task .day.done{background:var(--task-accent,var(--accent))}.day.today{border-color:var(--accent)}.task .day.today{border-color:var(--task-accent,var(--accent))}.day:disabled{cursor:default;opacity:.4}.legend{display:flex;gap:14px;color:var(--muted);font-size:11px;margin-top:12px}.dot{display:inline-block;width:8px;height:8px;border-radius:3px;margin-right:5px;background:var(--accent)}.dot.pending{background:var(--track)}
 .heatwrap{margin-top:17px;padding-top:13px;border-top:1px solid var(--line)}.heat{display:grid;grid-template-columns:repeat(13,1fr);grid-template-rows:repeat(29,7px);grid-auto-flow:column;gap:3px;margin-top:9px}.heatcell{background:var(--panel2);border-radius:2px}.heatcell.active{background:var(--accent)}.task .heatcell.active{background:var(--task-accent,var(--accent))}.heatlabel{font-size:11px;color:var(--muted)}.day.pop{animation:pop .35s ease}@keyframes pop{50%{transform:scale(1.18)}}
 .note{font-size:11px;color:var(--muted);margin-top:12px}
 dialog{border:1px solid var(--line);border-radius:20px;background:var(--panel);color:var(--text);width:min(440px,calc(100% - 28px));padding:22px;box-shadow:0 20px 80px #0009}dialog::backdrop{background:#000a}dialog h2{margin:0 0 16px;font-size:22px}.field{display:grid;gap:6px;margin:13px 0}.field label{font-size:12px;color:var(--muted)}.field input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:12px;color:var(--text)}.formactions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.danger{color:var(--red)!important}
@@ -86,13 +86,13 @@ body.focus-mode .focus-exit{display:block}
 .dashboard>.dashcard:not(.weekly){min-height:184px}
 @media(max-width:390px){.dashboard{grid-template-columns:1fr}.dashboard>.dashcard:not(.weekly){min-height:0}.globalstat{padding:10px}.globalstat span{font-size:11px}.backupbar button{font-size:11px}}
 
-footer{text-align:center;color:#777e8a;font-size:11px;padding:24px 0 10px}
-@media(min-width:620px){.app{padding-left:26px;padding-right:26px}.task{padding:21px}.day{border-radius:12px;font-size:13px}}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:24px 0 10px}
+@media(min-width:620px){.app{padding-left:max(26px,env(safe-area-inset-left));padding-right:max(26px,env(safe-area-inset-right))}.task{padding:21px}.day{border-radius:12px;font-size:13px}}
 
 .streak-presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .streak-preset{min-height:42px;border:1px solid var(--line);border-radius:11px;background:var(--panel2);color:var(--text);font-weight:650;padding:8px 5px}
 .streak-preset.selected{border-color:var(--accent);background:var(--accent);color:#151515}
-@media(max-width:520px){.tasktop{display:flex;flex-direction:column;align-items:stretch;gap:9px}.taskactions{width:100%;justify-content:flex-start;gap:5px}.tasktools{gap:5px}.taskactions .iconbtn{flex:0 0 34px}.taskmeta{max-width:100%}}
+@media(max-width:520px){.tasktop{display:flex;flex-direction:column;align-items:stretch;gap:9px}.taskactions{width:100%;justify-content:flex-start;gap:5px}.tasktools{gap:5px}.taskactions .iconbtn{flex:0 0 40px}.taskmeta{max-width:100%}}
 
 .celebration-dialog{width:min(92vw,430px);border:1px solid var(--line);border-radius:24px;padding:0;background:var(--panel);color:var(--text);overflow:hidden;box-shadow:0 24px 90px #0009}
 .celebration-dialog::backdrop{background:#050609d9;backdrop-filter:blur(5px)}
@@ -120,7 +120,7 @@ footer{text-align:center;color:#777e8a;font-size:11px;padding:24px 0 10px}
 <body>
 <div id="splash" aria-label="Daymark"><div class="splash-logo">✓</div></div>
 <div class="app">
-<header><div class="brand"><div class="mark">✓</div><div><strong>daymark</strong><small>show up daily</small></div></div><button class="primary" id="addBtn">＋ New task</button></header>
+<header><div class="brand"><div class="mark">✓</div><div><strong>daymark</strong><small>show up daily</small></div></div><button class="primary" id="addBtn">＋ New habit</button></header>
 <section class="intro"><div class="eyebrow">Small steps. Real progress.</div><h1>Make every day<br>count.</h1><p>Set a goal, mark each day you show up, and watch your streak grow.</p></section>
 <section class="dashboard" id="dashboard">
   <div class="dashcard">
@@ -143,15 +143,15 @@ footer{text-align:center;color:#777e8a;font-size:11px;padding:24px 0 10px}
 <button class="ghost" id="archiveToggle" style="width:100%;margin-bottom:12px">Archive · <span id="archiveCount">0</span></button>
 <div id="archiveHead" class="archivehead" hidden><strong>Archived habits</strong><span class="dashmuted">History kept safely</span></div><main id="archiveList" class="tasklist" hidden></main>
 <button class="primary focus-exit" id="exitFocus">Exit focus mode</button>
-<div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:12px;color:var(--muted);font-size:12px">Theme <select id="theme"><option value="dark">Midnight</option><option value="light">Light</option><option value="violet">Violet</option><option value="ocean">Ocean</option></select></div><div class="bulkbar" id="bulkBar"><span id="bulkInfo">Mark today across your active tasks</span><button class="primary" id="bulkComplete">✓ Mark all today</button></div><main id="taskList" class="tasklist"></main>
+<div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:12px;color:var(--muted);font-size:12px">Theme <select id="theme"><option value="dark">Midnight</option><option value="light">Light</option><option value="violet">Violet</option><option value="ocean">Ocean</option></select></div><div class="bulkbar" id="bulkBar"><span id="bulkInfo">Mark today across your active habits</span><button class="primary" id="bulkComplete">✓ Mark all today</button></div><main id="taskList" class="tasklist"></main>
 <footer>Your progress is saved on this device.</footer>
 </div>
 <dialog id="taskDialog">
 <form id="taskForm">
-<h2 id="dialogTitle">Create a task</h2>
+<h2 id="dialogTitle">Create a habit</h2>
 <div class="field"><label for="taskName">What do you want to do?</label><input id="taskName" maxlength="70" placeholder="e.g. Read 20 pages" required></div>
 <div class="field"><label for="taskCategory">Category</label><select id="taskCategory"><option>Health</option><option>Fitness</option><option>Learning</option><option>Productivity</option><option>Personal</option><option>Other</option></select></div>
-<div class="field"><label for="taskColor">Habit colour</label><select id="taskColor"><option value="">Use theme colour</option><option value="#c6f36a">Lime</option><option value="#79d8df">Ocean</option><option value="#c3a5ff">Violet</option><option value="#ffadad">Coral</option><option value="#ffc66d">Amber</option><option value="#91d6a8">Mint</option></select></div><div class="formactions"><button type="button" class="ghost" id="cancelBtn">Cancel</button><button class="primary" type="submit">Save task</button></div>
+<div class="field"><label for="taskColor">Habit colour</label><select id="taskColor"><option value="">Use theme colour</option><option value="#c6f36a">Lime</option><option value="#79d8df">Ocean</option><option value="#c3a5ff">Violet</option><option value="#ffadad">Coral</option><option value="#ffc66d">Amber</option><option value="#91d6a8">Mint</option></select></div><div class="formactions"><button type="button" class="ghost" id="cancelBtn">Cancel</button><button class="primary" type="submit">Save habit</button></div>
 </form>
 </dialog>
 <dialog id="streakDialog"><form id="streakForm"><h2>Start a new streak</h2><p class="restart-copy" id="streakPromptDate">Selected date</p><div class="field"><label>Choose a streak length</label><div class="streak-presets" role="group" aria-label="Streak length presets"><button type="button" class="streak-preset" data-days="7">7 days</button><button type="button" class="streak-preset" data-days="21">21 days</button><button type="button" class="streak-preset selected" data-days="30">30 days</button><button type="button" class="streak-preset" data-days="60">60 days</button><button type="button" class="streak-preset" data-days="90">90 days</button><button type="button" class="streak-preset" data-days="365">365 days</button></div></div><div class="field"><label for="streakCustomLength">Custom number of days</label><input id="streakCustomLength" type="number" min="1" max="3660" placeholder="Enter a custom duration"></div><input id="streakLength" type="hidden" value="30"><div class="formactions"><button type="button" class="ghost" id="streakCancel">Cancel</button><button class="primary" type="submit">Start streak</button></div></form></dialog>
@@ -169,64 +169,47 @@ footer{text-align:center;color:#777e8a;font-size:11px;padding:24px 0 10px}
  </div>
 </dialog>
 <dialog id="noteDialog"><form id="noteForm"><h2>Daily note</h2><div class="field"><label for="noteDate">Date</label><input id="noteDate" type="date" required></div><div class="field"><label for="noteText">What would you like to remember?</label><textarea id="noteText" rows="4" maxlength="500" placeholder="A quick reflection, detail or win…"></textarea></div><div class="formactions"><button type="button" class="ghost" id="noteCancel">Cancel</button><button class="primary" type="submit">Save note</button></div></form></dialog>
-<dialog id="restartDialog">
-  <form id="restartForm">
-    <h2 id="restartTitle">Ready for a fresh streak?</h2>
-    <p class="restart-copy" id="restartMessage">Every streak is a fresh chance to show up. Set a new target and begin again.</p>
-    <div class="restart-highlight"><div id="restartTaskName" style="font-weight:750"></div><div id="restartReason" class="restart-copy"></div></div>
-    <input type="hidden" id="restartTaskId">
-    <div class="field"><label for="restartWeeks">New streak length (weeks)</label><input id="restartWeeks" type="number" min="1" max="52" value="4" required></div>
-    <div class="field"><label for="restartStart">Start date</label><input id="restartStart" type="date" required></div>
-    <div class="formactions"><button type="button" class="ghost" id="restartLater">Not now</button><button class="primary" type="submit">Start new streak</button></div>
-  </form>
-</dialog>
+<script>window.addEventListener("load",function(){setTimeout(function(){var e=document.getElementById("splash");if(e)e.classList.add("hide")},650)})</script>
 <script>
 const $=s=>document.querySelector(s), todayISO=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};
-let tasks=JSON.parse(localStorage.getItem('daymark-tasks-v2')||localStorage.getItem('daymark-tasks')||'[]'), editing=null, monthOffsets={}, popDate=null;
-let undoAction=JSON.parse(localStorage.getItem('daymark-undo-v8')||'null');
+const DATE_RE=/^\d{4}-\d{2}-\d{2}$/,CATS=['Health','Fitness','Learning','Productivity','Personal','Other'];
+let loadFailed=false;
+function validDate(s){return typeof s==='string'&&DATE_RE.test(s)&&iso(dateObj(s))===s}
+function cleanDates(a){return Array.isArray(a)?[...new Set(a.filter(validDate))].sort():[]}
+function normTask(t){
+ if(!t||typeof t!=='object'||typeof t.name!=='string')return null;
+ let days=Math.min(3660,Math.max(0,Math.floor(Number(t.days))||0));
+ const start=validDate(t.start)&&days>0?t.start:'';if(!start)days=0;
+ const out={id:typeof t.id==='string'&&/^[\w-]{1,64}$/.test(t.id)?t.id:crypto.randomUUID(),name:t.name.slice(0,70)||'Untitled',category:CATS.includes(t.category)?t.category:'Personal',color:/^#[0-9a-f]{6}$/i.test(t.color||'')?t.color:'',days,start,done:cleanDates(t.done),history:[],notes:{}};
+ for(const h of Array.isArray(t.history)?t.history:[]){if(!h||typeof h!=='object')continue;const hd=Math.min(3660,Math.max(0,Math.floor(Number(h.days))||0)),hs=validDate(h.start)&&hd>0?h.start:'';out.history.push({start:hs,days:hs?hd:0,done:cleanDates(h.done),endedAt:validDate(h.endedAt)?h.endedAt:''})}
+ if(t.notes&&typeof t.notes==='object')for(const k of Object.keys(t.notes))if(validDate(k)&&typeof t.notes[k]==='string')out.notes[k]=t.notes[k].slice(0,500);
+ ['paused','archived','pinned'].forEach(k=>{if(t[k])out[k]=true});
+ if(out.paused&&validDate(t.pausedAt))out.pausedAt=t.pausedAt;
+ if(Number.isFinite(t.order))out.order=t.order;
+ if(start){const end=addDays(start,days-1),inH=new Set(out.history.flatMap(h=>h.done));out.done=out.done.filter(d=>(d>=start&&d<=end)||!inH.has(d))}
+ return out;
+}
+function dedupeIds(list){const seen=new Set();return list.map(t=>{if(seen.has(t.id))t.id=crypto.randomUUID();seen.add(t.id);return t})}
+function loadTasks(){
+ let raw='[]';
+ try{raw=localStorage.getItem('daymark-tasks-v2')||localStorage.getItem('daymark-tasks')||'[]';const p=JSON.parse(raw),arr=Array.isArray(p)?p:p&&p.tasks;if(!Array.isArray(arr))throw new Error('bad');return dedupeIds(arr.map(normTask).filter(Boolean))}
+ catch(e){loadFailed=true;try{localStorage.setItem('daymark-corrupt-backup',raw)}catch(_){}return[]}
+}
+let tasks=loadTasks(), editing=null, monthOffsets={}, popDate=null;
+let undoAction=null;try{undoAction=JSON.parse(localStorage.getItem('daymark-undo-v8')||'null')}catch(e){}
 let archiveOpen=false, noteTaskId=null, focusTaskId=null;
-tasks.forEach(t=>{if(!t.category)t.category='Personal';if(!Array.isArray(t.done))t.done=[];if(!t.notes||typeof t.notes!=='object')t.notes={};if(!Array.isArray(t.history))t.history=[];}); const savedTheme=localStorage.getItem('daymark-theme')||'dark';document.documentElement.dataset.theme=savedTheme;
-function save(){localStorage.setItem('daymark-tasks-v2',JSON.stringify(tasks));render()}
+const savedTheme=localStorage.getItem('daymark-theme')||'dark';document.documentElement.dataset.theme=savedTheme;
+function save(){try{localStorage.setItem('daymark-tasks-v2',JSON.stringify(tasks))}catch(e){toast('Could not save — device storage may be full.')}render()}
 function dateObj(s){const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)}
 function iso(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 function addDays(s,n){const d=dateObj(s);d.setDate(d.getDate()+n);return iso(d)}
 function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function streak(t){if(!t.start||!Number(t.days))return 0;let n=0,cursor=todayISO();while(cursor>=t.start&&cursor<=addDays(t.start,t.days-1)&&(t.done||[]).includes(cursor)){n++;cursor=addDays(cursor,-1)}return n}
+function inWin(t,d){return !!t.start&&Number(t.days)>0&&d>=t.start&&d<=addDays(t.start,Number(t.days)-1)}
+function completedSet(t){return new Set([...(t.done||[]),...(t.history||[]).flatMap(h=>h.done||[])])}
+function canContinue(t,d){return inWin(t,d)&&!(t.done||[]).includes(d)&&completedSet(t).has(addDays(d,-1))}
+function streak(t){if(!inWin(t,t.start))return 0;const end=addDays(t.start,Number(t.days)-1),done=new Set(t.done||[]);let c=todayISO();if(c>end)c=end;else if(!done.has(c))c=addDays(c,-1);let n=0;while(c>=t.start&&done.has(c)){n++;c=addDays(c,-1)}return n}
 function longest(t){let best=0;const groups=[...(t.history||[]),{start:t.start,days:t.days,done:t.done||[]}];for(const g of groups){if(!g.start||!Number(g.days))continue;let run=0,prev='';for(const d of [...new Set(g.done||[])].filter(x=>x>=g.start&&x<=addDays(g.start,g.days-1)).sort()){run=prev&&addDays(prev,1)===d?run+1:1;best=Math.max(best,run);prev=d}}return best}
 function heatmap(t){const y=new Date().getFullYear(),all=[...new Set([...(t.history||[]).flatMap(h=>h.done||[]),...(t.done||[])])];let cells='';for(let i=0;i<365+(new Date(y,1,29).getMonth()===1?1:0);i++){const d=iso(new Date(y,0,i+1));cells+=`<div class="heatcell ${all.includes(d)?'active':''}" title="${d}"></div>`}return `<div class="heatwrap"><div class="heatlabel"><b>${y} consistency heatmap</b> · ${all.filter(d=>d.startsWith(String(y))).length} completed days</div><div class="heat">${cells}</div></div>`}
-let activeRestartPrompt=null;
-function streakStatus(t){
- const end=addDays(t.start,t.days-1), today=todayISO(), completed=t.done.filter(d=>d>=t.start&&d<=end).length;
- if(completed>=t.days || today>end)return {kind:"ended",token:"ended-"+end,reason:completed>=t.days?"You reached your goal. Celebrate the win, then set your next target.":"Your challenge period has finished. Choose a fresh target and begin again."};
- const yesterday=addDays(today,-1), priorDone=t.done.filter(d=>d>=t.start&&d<=yesterday).sort(), lastDone=priorDone[priorDone.length-1];
- if(today>t.start && today<=end && lastDone && !t.done.includes(yesterday))
-   return {kind:"broken",token:"broken-"+lastDone,reason:"Yesterday was missed, so your consecutive streak has ended. You can begin again today."};
- return null;
-}
-function maybePromptRestart(){
- return; if(activeRestartPrompt || !$('#restartDialog') || $('#restartDialog').open)return;
- for(const t of tasks){
-  if(t.archived||t.paused)continue;
-  const status=streakStatus(t); if(!status)continue;
-  if(t.restartPromptDismissed===status.token || t.restartPrompted===status.token)continue;
-  activeRestartPrompt={taskId:t.id,token:status.token};
-  $('#restartTaskId').value=t.id;
-  $('#restartTaskName').textContent=t.name;
-  $('#restartReason').textContent=status.reason;
-  $('#restartTitle').textContent=status.kind==='ended'?'You did it! Start a new streak?':'Your streak has ended. Ready to restart?';
-  $('#restartMessage').textContent=status.kind==='ended'?'You completed your target. Keep the momentum going with a fresh challenge.':'One missed day doesn’t erase your progress. Choose a new goal and start fresh.';
-  $('#restartWeeks').value=Math.max(1,Math.round(t.days/7));
-  $('#restartStart').value=todayISO();
-  $('#restartDialog').showModal();
-  break;
- }
-}
-$('#restartLater').onclick=()=>{if(activeRestartPrompt){const t=tasks.find(x=>x.id===activeRestartPrompt.taskId);if(t){t.restartPromptDismissed=activeRestartPrompt.token;localStorage.setItem('daymark-tasks-v2',JSON.stringify(tasks));}}activeRestartPrompt=null;$('#restartDialog').close()};
-$('#restartForm').onsubmit=e=>{e.preventDefault();const old=tasks.find(x=>x.id===$('#restartTaskId').value),weeks=Number($('#restartWeeks').value),start=$('#restartStart').value;if(!old||!start||weeks<1||weeks>52)return;
- const status=streakStatus(old);if(status)old.restartPrompted=status.token;
- tasks.unshift({id:crypto.randomUUID(),name:old.name,days:weeks*7,start,done:[]});
- activeRestartPrompt=null;$('#restartDialog').close();save();
-};
 function orderedTasks(){return tasks.filter(t=>!t.archived).sort((a,b)=>(Number(!!b.pinned)-Number(!!a.pinned))||((a.order??tasks.indexOf(a))-(b.order??tasks.indexOf(b))))}
 
 function persistUndo(){localStorage.setItem('daymark-undo-v8',JSON.stringify(undoAction))}
@@ -250,7 +233,7 @@ function undoLast(){
 }
 function renderDashboard(){
  const today=todayISO();
- const eligible=tasks.filter(t=>!t.archived&&!t.paused&&t.start&&Number(t.days)>0&&today>=t.start&&today<=addDays(t.start,t.days-1));
+ const eligible=tasks.filter(t=>!t.archived&&!t.paused&&inWin(t,today));
  const completed=eligible.filter(t=>(t.done||[]).includes(today)).length;
  const pct=eligible.length?Math.round(completed/eligible.length*100):0;
  $('#todayLabel').textContent=new Date().toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'});
@@ -259,18 +242,18 @@ function renderDashboard(){
  $('#todayCount').textContent=completed+'/'+eligible.length;
  const visibleTasks=tasks.filter(t=>!t.archived); const checks=visibleTasks.reduce((n,t)=>n+new Set([...(t.history||[]).flatMap(h=>h.done||[]),...(t.done||[])]).size,0);
  const active=eligible.length;
- const avg=visibleTasks.length?Math.round(visibleTasks.reduce((n,t)=>n+Math.min(100,Math.round((t.done||[]).filter(d=>t.start&&d>=t.start&&d<=addDays(t.start,t.days-1)).length/(Number(t.days)||1)*100)),0)/visibleTasks.length):0;
+ const planned=visibleTasks.filter(t=>t.start&&Number(t.days)>0);const avg=planned.length?Math.round(planned.reduce((n,t)=>n+Math.min(100,(t.done||[]).filter(d=>inWin(t,d)).length/Number(t.days)*100),0)/planned.length):0;
  $('#statChecks').textContent=checks;
  $('#statActive').textContent=active;
  $('#statRate').textContent=avg+'%';
- const now=dateObj(today), monday=new Date(now);monday.setDate(now.getDate()-(now.getDay()+6)%7);
+ const now=dateObj(today), monday=new Date(now);monday.setDate(now.getDate()-now.getDay());
  const sunday=new Date(monday);sunday.setDate(monday.getDate()+6);
  $('#weekRange').textContent=monday.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' – '+sunday.toLocaleDateString(undefined,{month:'short',day:'numeric'});
  let total=0,strip='';
- const labels=['M','T','W','T','F','S','S'];
+ const labels=['S','M','T','W','T','F','S'];
  for(let i=0;i<7;i++){
   const d=new Date(monday);d.setDate(monday.getDate()+i);const key=iso(d);
-  const due=tasks.filter(t=>!t.archived&&!t.paused&&t.start&&Number(t.days)>0&&key>=t.start&&key<=addDays(t.start,t.days-1));
+  const due=tasks.filter(t=>!t.archived&&!t.paused&&inWin(t,key));
   const done=due.filter(t=>(t.done||[]).includes(key)).length;
   total+=done;const ratio=due.length?Math.round(done/due.length*100):0;
   strip+=`<div class="weekday ${key===today?'today':''}" title="${key}: ${done}/${due.length} habits"><div class="wd">${labels[i]}</div><div class="wdnum">${d.getDate()}</div><div class="dashmuted">${done}/${due.length}</div><div class="wdbar"><i style="width:${ratio}%"></i></div></div>`;
@@ -290,7 +273,7 @@ function toast(message){
 function taskCardMarkup(t,index,ordered,isArchived=false){
  t.done=t.done||[];t.notes=t.notes||{};
  const today=todayISO(),hasPlan=!!t.start&&Number(t.days)>0,end=hasPlan?addDays(t.start,t.days-1):today,hasStarted=hasPlan&&(t.done||[]).some(d=>d>=t.start&&d<=end),count=hasStarted?t.done.filter(d=>d>=t.start&&d<=end).length:0,pct=hasStarted?Math.round(count/t.days*100):0,st=hasStarted?streak(t):0,best=longest(t),left=hasStarted?Math.max(0,t.days-count):0;
- const off=monthOffsets[t.id]||0,base=hasStarted?dateObj(t.start):dateObj(today),view=new Date(base.getFullYear(),base.getMonth()+off,1),y=view.getFullYear(),m=view.getMonth(),first=new Date(y,m,1).getDay(),total=new Date(y,m+1,0).getDate();
+ const off=monthOffsets[t.id]||0,base=dateObj(today),view=new Date(base.getFullYear(),base.getMonth()+off,1),y=view.getFullYear(),m=view.getMonth(),first=new Date(y,m,1).getDay(),total=new Date(y,m+1,0).getDate();
  const paused=!!t.paused,archived=!!t.archived,pinned=!!t.pinned,accent=t.color||'var(--accent)';
  let cells='';for(let i=0;i<first;i++)cells+='<div class="day blank"></div>';
  for(let n=1;n<=total;n++){const d=iso(new Date(y,m,n)),done=(t.done||[]).includes(d)||(t.history||[]).some(h=>(h.done||[]).includes(d)),future=d>today;cells+=`<button class="day ${done?'done':''} ${d===today?'today':''} ${popDate===t.id+':'+d?'pop':''}" data-task="${t.id}" data-date="${d}" ${future||paused||archived?'disabled':''} aria-label="${d}${done?', completed':''}">${done?'✓':n}</button>`}
@@ -298,26 +281,27 @@ function taskCardMarkup(t,index,ordered,isArchived=false){
  const historicChecks=(t.history||[]).reduce((n,h)=>n+(h.done||[]).length,0),allTimeChecks=new Set([...(t.history||[]).flatMap(h=>h.done||[]),...(t.done||[])]).size;const earned=[];if(count>=7)earned.push('7 check-ins');if(count>=30)earned.push('30 check-ins');if(best>=7)earned.push('7-day streak');if(best>=30)earned.push('30-day streak');if(pct===100)earned.push('Goal achieved');
  return `<article class="task ${pinned?'pinned':''} ${paused?'paused':''} ${archived?'archived':''}" data-card="${t.id}" style="--task-accent:${accent}">
  <div class="tasktop"><div><div class="taskname">${esc(t.name)}${pinned?'<span class="pinmark">📌 PINNED</span>':''}${paused?'<span class="taskbadge">PAUSED</span>':''}${archived?'<span class="taskbadge">ARCHIVED</span>':''}</div><div class="taskmeta">${hasStarted?t.days+' day goal · '+t.start+' → '+end:'No streak started yet'}</div><span class="taskbadge">${esc(t.category||'Other')}</span>${earned.map(x=>`<span class="achievement">🏅 ${x}</span>`).join('')}${(t.history||[]).length?`<span class="taskbadge">${t.history.length} previous streak${t.history.length===1?'':'s'} saved</span>`:''}</div>
- <div class="taskactions"><div class="tasktools">${!isArchived?`<button class="iconbtn" data-move="${t.id}" data-direction="up" title="Move up" ${!previous||!!previous.pinned!==pinned?'disabled':''}>↑</button><button class="iconbtn" data-move="${t.id}" data-direction="down" title="Move down" ${!next||!!next.pinned!==pinned?'disabled':''}>↓</button><button class="iconbtn" data-pin="${t.id}" title="${pinned?'Unpin':'Pin'}">${pinned?'📌':'♧'}</button>`:''}</div><button class="iconbtn" data-edit="${t.id}" aria-label="Edit task">✎</button><button class="iconbtn" data-delete="${t.id}" aria-label="Delete task">×</button></div></div>
+ <div class="taskactions"><div class="tasktools">${!isArchived?`<button class="iconbtn" data-move="${t.id}" data-direction="up" title="Move up" aria-label="Move up" ${!previous||!!previous.pinned!==pinned?'disabled':''}>↑</button><button class="iconbtn" data-move="${t.id}" data-direction="down" title="Move down" aria-label="Move down" ${!next||!!next.pinned!==pinned?'disabled':''}>↓</button><button class="iconbtn" data-pin="${t.id}" title="${pinned?'Unpin':'Pin'}" aria-label="${pinned?'Unpin habit':'Pin habit'}">${pinned?'📌':'♧'}</button>`:''}</div><button class="iconbtn" data-edit="${t.id}" aria-label="Edit habit">✎</button><button class="iconbtn" data-delete="${t.id}" aria-label="Delete habit">×</button></div></div>
  <div class="stats"><div class="stat"><b>${allTimeChecks}</b><span>All-time check-ins</span></div><div class="stat"><b>${st} 🔥</b><span>Current streak</span></div><div class="stat"><b>${best}</b><span>Longest streak</span></div></div>
  <div class="stats" style="margin-top:-8px"><div class="stat" style="grid-column:span 2"><b>${!hasStarted?'Not started':left===0?"Goal achieved 🎉":left+" days"}</b><span>${!hasStarted?'Choose a calendar date':left===0?"Challenge completed":"Days remaining"}</span></div><div class="stat"><b>${pct}%</b><span>Complete</span></div></div>
  <div class="progresshead"><span>Goal progress</span><b>${pct}%</b></div><div class="bar"><i style="width:${pct}%;background:${accent}"></i></div>
  <div class="calhead"><strong>${view.toLocaleString(undefined,{month:'long',year:'numeric'})}</strong><div class="monthnav"><button class="ghost" data-month="${t.id}" data-step="-1">‹</button><button class="ghost" data-month="${t.id}" data-step="1">›</button></div></div>
  <div class="week"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div><div class="days">${cells}</div>
  <div class="legend"><span><i class="dot" style="background:${accent}"></i>Completed</span><span><i class="dot pending"></i>Not completed</span></div>${heatmap(t)}
- <div class="v9actions">${!isArchived?`<button class="ghost" data-pause="${t.id}">${paused?'▶ Resume':'Ⅱ Pause'}</button><button class="ghost" data-archive="${t.id}">Archive</button>`:`<button class="ghost" data-restore="${t.id}">Restore habit</button>`}<button class="ghost" data-focus="${t.id}">◎ Focus</button><button class="ghost" data-note="${t.id}">✎ Daily note</button></div>
+ <div class="v9actions">${!isArchived?`<button class="ghost" data-pause="${t.id}">${paused?'▶ Resume':'Ⅱ Pause'}</button><button class="ghost" data-archive="${t.id}">Archive</button>`:`<button class="ghost" data-restore="${t.id}">Restore habit</button>`}${!isArchived?`<button class="ghost" data-focus="${t.id}">◎ Focus</button>`:''}<button class="ghost" data-note="${t.id}">✎ Daily note</button></div>
  ${noteText?`<div class="note-preview">Today: ${esc(noteText)}</div>`:''}<div class="note">${paused?'Paused — resume this habit when ready.':isArchived?'Archived history is preserved.':'Tap an unmarked date to start a new streak. Choose its duration in the popup. Future dates are locked.'}</div></article>`;
 }
 function render(){
  renderDashboard();
  const host=$('#taskList'),today=todayISO();
- const active=tasks.filter(t=>!t.archived),eligible=active.filter(t=>!t.paused&&today>=t.start&&today<=addDays(t.start,t.days-1)),pending=eligible.filter(t=>!(t.done||[]).includes(today));
+ if(focusTaskId&&!tasks.some(t=>t.id===focusTaskId&&!t.archived))focusTaskId=null;
+ const active=tasks.filter(t=>!t.archived),pending=active.filter(t=>!t.paused&&canContinue(t,today));
  $('#bulkBar').style.display=active.length?'flex':'none';
- $('#bulkInfo').textContent=pending.length?`${pending.length} task${pending.length===1?'':'s'} still need today's check-off`:'All active tasks are marked for today';
+ $('#bulkInfo').textContent=pending.length?`${pending.length} habit${pending.length===1?'':'s'} ready to check off today`:'Nothing left to check off in bulk today';
  $('#bulkComplete').disabled=!pending.length;$('#bulkComplete').style.opacity=pending.length?1:.55;
  const ordered=orderedTasks(),search=($('#habitSearch')?.value||'').trim().toLowerCase(),category=$('#categoryFilter')?.value||'all';
  const filtered=ordered.filter(t=>(!search||t.name.toLowerCase().includes(search))&&(category==='all'||(t.category||'Other')===category));
- host.innerHTML=filtered.length?filtered.map((t,i)=>taskCardMarkup(t,i,filtered,false)).join(''):`<div class="empty"><b>${active.length?'No matching habits.':'Your first streak starts here.'}</b>${active.length?'Try another search or category.':'Create a task, choose your target, then tap each date when you complete it.'}</div>`;
+ host.innerHTML=filtered.length?filtered.map((t,i)=>taskCardMarkup(t,i,filtered,false)).join(''):`<div class="empty"><b>${active.length?'No matching habits.':'Your first streak starts here.'}</b>${active.length?'Try another search or category.':'Create a habit, choose your target, then tap each date when you complete it.'}</div>`;
  const archived=tasks.filter(t=>t.archived);
  $('#archiveCount').textContent=archived.length;$('#archiveHead').hidden=!archiveOpen;$('#archiveList').hidden=!archiveOpen;
  if(archiveOpen)$('#archiveList').innerHTML=archived.length?archived.map((t,i)=>taskCardMarkup(t,i,archived,true)).join(''):'<div class="empty">No archived habits yet.</div>';
@@ -389,22 +373,22 @@ $('#streakForm').onsubmit=e=>{
    return;
  }
  t.history=Array.isArray(t.history)?t.history:[];
- const previousDates=[...new Set([...(t.done||[]),...t.history.flatMap(h=>Array.isArray(h.done)?h.done:[])])];
- if(t.start&&Number(t.days)>0&&previousDates.length){
-   const existing=t.history.find(h=>h.start===t.start&&Number(h.days)===Number(t.days));
-   if(existing){existing.done=[...new Set([...(existing.done||[]),...previousDates])];existing.endedAt=date;}
-   else{t.history.push({start:t.start,days:Number(t.days),done:previousDates,endedAt:date});}
+ const prev=[...new Set(t.done||[])];
+ if(prev.length){
+   const existing=t.start?t.history.find(h=>h.start===t.start&&Number(h.days)===Number(t.days)):null;
+   if(existing)existing.done=[...new Set([...(existing.done||[]),...prev])];
+   else t.history.push({start:t.start||'',days:t.start?Number(t.days):0,done:prev,endedAt:date});
  }
- // Preserve every completion date; starting a new plan changes only the active streak window.
- t.done=[...new Set([...previousDates,date])];
+ // Past check-ins live in history; only dates inside the new window stay active.
+ t.done=[...new Set([date,...prev.filter(x=>x>=date&&x<=addDays(date,days-1))])].sort();
  t.start=date;t.days=days;t.paused=false;delete t.pausedAt;
  $('#streakDialog').close();pendingStreak={taskId:null,date:null};save();
  toast('New streak started!');
  if(days===1)celebrateStreakCompletion(t,date);
 };
-$('#taskForm').onsubmit=async e=>{e.preventDefault();const name=$('#taskName').value.trim(),category=$('#taskCategory').value,color=$('#taskColor').value;if(!name)return;if(editing){const t=tasks.find(x=>x.id===editing);t.name=name;t.category=category;t.color=color}
+$('#taskForm').onsubmit=e=>{e.preventDefault();const name=$('#taskName').value.trim(),category=$('#taskCategory').value,color=$('#taskColor').value;if(!name)return;if(editing){const t=tasks.find(x=>x.id===editing);t.name=name;t.category=category;t.color=color}
  else tasks.unshift({id:crypto.randomUUID(),name,category,color,days:0,start:'',done:[],history:[],notes:{}});$('#taskDialog').close();save()};
-$('#bulkComplete').onclick=()=>{const d=todayISO(),changes=[];tasks.forEach(t=>{if(!t.archived&&!t.paused&&d>=t.start&&d<=addDays(t.start,t.days-1)&&!t.done.includes(d)){changes.push({taskId:t.id,date:d,wasDone:false});t.done.push(d)}});if(changes.length){setUndo(changes,'Mark all today');save();toast(`Marked today complete for ${changes.length} task${changes.length===1?'':'s'}! ✨`);const finished=changes.map(c=>tasks.find(t=>t.id===c.taskId)).find(t=>t&&isFinalStreakDay(t,d));if(finished)celebrateStreakCompletion(finished,d)}};
+$('#bulkComplete').onclick=()=>{const d=todayISO(),changes=[];tasks.forEach(t=>{if(!t.archived&&!t.paused&&canContinue(t,d)){changes.push({taskId:t.id,date:d,wasDone:false});t.done.push(d)}});if(changes.length){setUndo(changes,'Mark all today');save();toast(`Marked today complete for ${changes.length} task${changes.length===1?'':'s'}! ✨`);const finished=changes.map(c=>tasks.find(t=>t.id===c.taskId)).find(t=>t&&isFinalStreakDay(t,d));if(finished)celebrateStreakCompletion(finished,d)}};
 $('#taskList').addEventListener('click',e=>{
  const b=e.target.closest('button');if(!b)return;
  if(b.dataset.pin){const t=tasks.find(x=>x.id===b.dataset.pin);t.pinned=!t.pinned;save();return}
@@ -427,7 +411,7 @@ $('#taskList').addEventListener('click',e=>{
     if(isHistorical&&previousCompleted&&nextCompleted){
       removeCompletion();toast('Check-off removed.');
     }else if(isHistorical&&previousCompleted){
-      if(confirm('The previous day is completed. Do you want to continue this streak from this date?'))openStreakDialog(t.id,d);
+      if(confirm('Remove the check-off for this date?'))removeCompletion();else if(confirm('Start a new streak from this date instead?'))openStreakDialog(t.id,d);
     }else{
       removeCompletion();
     }
@@ -446,15 +430,15 @@ $('#taskList').addEventListener('click',e=>{
  if(b.dataset.edit)openDialog(tasks.find(x=>x.id===b.dataset.edit));
  if(b.dataset.delete){const t=tasks.find(x=>x.id===b.dataset.delete);if(confirm(`Delete “${t.name}” and its progress?`)){tasks=tasks.filter(x=>x.id!==t.id);save()}}
 });
-$('#archiveList').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.restore){const t=tasks.find(x=>x.id===b.dataset.restore);t.archived=false;save()}if(b.dataset.delete){const t=tasks.find(x=>x.id===b.dataset.delete);if(confirm(`Delete “${t.name}” and its progress?`)){tasks=tasks.filter(x=>x.id!==t.id);save()}}if(b.dataset.note){const t=tasks.find(x=>x.id===b.dataset.note);noteTaskId=t.id;$('#noteDate').value=todayISO();$('#noteText').value=(t.notes||{})[todayISO()]||'';$('#noteDialog').showModal()}if(b.dataset.focus){focusTaskId=b.dataset.focus;render()}if(b.dataset.month){monthOffsets[b.dataset.month]=(monthOffsets[b.dataset.month]||0)+Number(b.dataset.step);render()}if(b.dataset.edit)openDialog(tasks.find(x=>x.id===b.dataset.edit))});
+$('#archiveList').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.restore){const t=tasks.find(x=>x.id===b.dataset.restore);t.archived=false;save()}if(b.dataset.delete){const t=tasks.find(x=>x.id===b.dataset.delete);if(confirm(`Delete “${t.name}” and its progress?`)){tasks=tasks.filter(x=>x.id!==t.id);save()}}if(b.dataset.note){const t=tasks.find(x=>x.id===b.dataset.note);noteTaskId=t.id;$('#noteDate').value=todayISO();$('#noteText').value=(t.notes||{})[todayISO()]||'';$('#noteDialog').showModal()}if(b.dataset.month){monthOffsets[b.dataset.month]=(monthOffsets[b.dataset.month]||0)+Number(b.dataset.step);render()}if(b.dataset.edit)openDialog(tasks.find(x=>x.id===b.dataset.edit))});
 $('#undoBtn').onclick=undoLast;
 
 $('#habitSearch').addEventListener('input',render);
 $('#categoryFilter').addEventListener('change',render);
 $('#archiveToggle').onclick=()=>{archiveOpen=!archiveOpen;render()};
-$('#exportBtn').onclick=()=>{const payload={app:'Daymark',version:9,exportedAt:new Date().toISOString(),tasks};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='daymark-backup-'+todayISO()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Backup exported.')};
+$('#exportBtn').onclick=()=>{const payload={app:'Daymark',version:10,exportedAt:new Date().toISOString(),tasks};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='daymark-backup-'+todayISO()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Backup exported.')};
 $('#importBtn').onclick=()=>$('#importFile').click();
-$('#importFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text()),incoming=Array.isArray(data)?data:data.tasks;if(!Array.isArray(incoming)||!incoming.every(t=>t&&typeof t.name==='string'&&typeof t.start==='string'&&Number.isFinite(Number(t.days))))throw new Error('Invalid backup');if(!confirm('Import this backup and replace the habits currently on this device? Export a backup first if you want to keep the current data.'))return;tasks=incoming.map(t=>({...t,done:Array.isArray(t.done)?t.done:[],notes:t.notes&&typeof t.notes==='object'?t.notes:{}}));localStorage.setItem('daymark-tasks-v2',JSON.stringify(tasks));undoAction=null;persistUndo();save();toast('Backup restored.')}catch(err){alert('Could not import this backup. Please choose a valid Daymark JSON backup.')}finally{e.target.value=''}};
+$('#importFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text()),incoming=Array.isArray(data)?data:data.tasks;if(!Array.isArray(incoming))throw new Error('Invalid backup');const cleaned=dedupeIds(incoming.map(normTask).filter(Boolean));if(!cleaned.length&&incoming.length)throw new Error('Invalid backup');if(!confirm(`Import ${cleaned.length} habit${cleaned.length===1?'':'s'} and replace the habits currently on this device? Export a backup first if you want to keep the current data.`))return;tasks=cleaned;localStorage.setItem('daymark-tasks-v2',JSON.stringify(tasks));undoAction=null;persistUndo();save();toast('Backup restored.')}catch(err){alert('Could not import this backup. Please choose a valid Daymark JSON backup.')}finally{e.target.value=''}};
 $('#noteCancel').onclick=()=>$('#noteDialog').close();
 $('#noteForm').onsubmit=e=>{e.preventDefault();const t=tasks.find(x=>x.id===noteTaskId);if(!t)return;t.notes=t.notes||{};const d=$('#noteDate').value,txt=$('#noteText').value.trim();if(txt)t.notes[d]=txt;else delete t.notes[d];$('#noteDialog').close();save();toast('Daily note saved.')};
 $('#exitFocus').onclick=()=>{focusTaskId=null;render()};
@@ -470,6 +454,7 @@ $('#taskList').addEventListener('click',e=>{
 $('#theme').value=savedTheme;$('#theme').onchange=e=>{document.documentElement.dataset.theme=e.target.value;localStorage.setItem('daymark-theme',e.target.value)};
 
 render();
-window.addEventListener('load',()=>{setTimeout(()=>$('#splash')?.classList.add('hide'),650)});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)render()});
+if(loadFailed)toast('Saved data could not be read. A copy was kept; starting empty.');
 if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));</script>
 </body></html>

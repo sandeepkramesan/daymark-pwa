@@ -1,40 +1,24 @@
 # Daymark
 
+A single-file, offline-capable habit tracker PWA. No account or server; data stays in the browser (`daymark-tasks-v2` local storage key).
+
 ## Features
-- Previous streak check-ins remain visible in the calendar when a new streak begins.
-- Multiple habits with individual calendars, date check-offs and undo
-- Create habits without choosing a start date or duration; select a calendar date to begin a streak and choose a duration from 7, 21, 30, 60, 90, or 365 days, or enter a custom number
-- Start a new streak from another uncompleted calendar date while preserving previous streak history
-- Consecutive dates within an active streak are checked off directly; the streak-length prompt appears only when starting a genuinely new streak
-- Current and longest streaks, goal progress, days remaining, and yearly consistency heatmap (counts distinct completed calendar dates, including saved previous streaks)
-- Daily progress dashboard with completion ring
-- Weekly overview showing daily completed habits
-- Habit statistics, including all-time check-ins, active habits, and average goal progress
-- Undo the latest calendar check-off or bulk "Mark all today" action
-- Reorder habits and pin important habits
-- One-tap **Mark all today** for active habits
-- Habit categories, category filtering, and search
-- Archive and restore habits without losing completion history
-- Pause and resume habits without deleting progress
-- Milestone achievement badges
-- Animated celebration when the final day of a fully completed streak is checked off, with an option to extend using the existing streak-duration presets or a custom duration
-- Daily notes attached to a habit and date
-- Focus mode for one habit at a time
-- Export and import JSON backups of habits, notes, categories, and progress
-- Four themes
-- Offline app shell; habit data is stored locally in the browser
-- App label set to **daymark**, with dedicated Android launcher and splash-screen icons
+- Multiple habits with individual calendars; tap a date to check it off, tap again to undo
+- Create a habit without a start date; tap a calendar date to begin a streak and pick 7, 21, 30, 60, 90, 365 days or a custom 1–3,660
+- Consecutive days in an active streak are checked directly; the length prompt appears only for a new streak
+- Previous streaks stay visible and editable in the calendar; an earlier completed date can be unchecked or used to continue a streak
+- Current/longest streak, goal progress, days remaining, yearly heatmap
+- Dashboard: today's ring, weekly overview, all-time stats
+- Undo the latest check-off or "Mark all today" (bulk marks habits whose streak continues from yesterday)
+- Reorder, pin, pause/resume, archive/restore, categories, search, colours, four themes
+- Milestone badges, completion celebration with "extend streak"
+- Daily notes, focus mode
+- JSON export/import (imports are validated and sanitised)
 
-## Install/update on Android
-Host all files in this folder on HTTPS. For an existing GitHub Pages deployment, replace the repository files with these files; the URL stays the same. Reload the PWA after deployment.
+## Deploying
+Host all files on HTTPS (e.g. GitHub Pages) and replace the old files. Pages load network-first, so a normal reopen picks up the new version. **Bump `CACHE` in `sw.js` on every release.**
 
-## Privacy
-No account or server is used. Clearing browser site data erases local habit data.
+## v24 changes
+Fixed: "Mark all today" corrupting habits with no streak; permanent splash when saved data is unreadable (a copy is kept under `daymark-corrupt-backup`); calendar opening on the streak's start month; current streak showing 0 until today is checked; unable to uncheck the last day of an older streak; unsafe backup import; focus-mode blank screens; midnight rollover; light theme colours; stale service worker caching. Past check-ins are no longer duplicated into every history entry. Removed dead restart-dialog code and unused icons. Larger tap targets; "task" wording now "habit".
 
-Daily reminder scheduling is not included because browser-based reminders are not reliable when the app is closed. Existing habit data continues to use the `daymark-tasks-v2` local storage key.
-
-- Custom streak lengths from 1 to 3,660 days, alongside preset durations.
-- Previous completion dates remain visible in the calendar when a new streak begins.
-
-- Historical check-offs remain interactive: dates can be unchecked, and an earlier completed date can be used to continue a streak.
-- Custom streak durations accept whole numbers from 1 to 3,660 days.
+Daily reminders are not included: browser reminders are unreliable when the app is closed.
