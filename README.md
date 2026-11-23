@@ -18,6 +18,9 @@ A single-file, offline-capable habit tracker PWA. No account or server; data sta
 ## Deploying
 Host all files on HTTPS (e.g. GitHub Pages) and replace the old files. Pages load network-first, so a normal reopen picks up the new version. **Bump `CACHE` in `sw.js` on every release.**
 
+## v27 changes
+App icons regenerated from the header logo under new file names (`daymark-any-*`, `daymark-maskable-*`, `apple-touch-180`) so Android/iOS refresh the installed icon. Maskable icon keeps the logo inside the launcher safe zone.
+
 ## v26 changes
 Logo unified: the header tick is now a vector shape used identically in the header, in-app splash and the PWA/launcher/Android splash icons.
 
